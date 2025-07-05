@@ -42,42 +42,7 @@ La resolucion de la ecuacion de calor en dos dimensiones, integra conocimientos 
 
 
 ## Codigo en Python
-Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo.
-
-##Codigo para la distribucion de temperatura en t = 0.100
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linag import spsolve
- 
-Lx, Ly = 1.0, 1.0
-
-Nx, Ny = 20, 20
-
-dx, dy = Lx / Nx, Ly / Ny
-
-x = np.linspace(0, Lx, Nx+1)
-y = np.linspace(0, Ly, Ny+1)
-
-T = 0.1
-dt = 0.001
-nt = int(T / dt)
-
-alpha = 1.0
-
-u = np.zeros((Nx+1, Ny+1))
-u_new = np.zeros_like(u)
-
-X, Y = np.meshgrid(x, y, indexing='ij')
-
-u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
-
-rx = alpha * dt / (2 * dx**2)
-ry = alpha * dt / (2 * dy**2)
-
-Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
-Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
+Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo. 
 
 Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
 By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
