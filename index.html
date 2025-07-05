@@ -151,18 +151,7 @@ ry = alpha * dt / (2 * dy</strong>2)</p>
 Bx = diags([[rx]<em>(Nx-1), [1-2</em>rx]<em>(Nx-1), [rx]</em>(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))</p>
 <p>Ay = diags([[-ry]<em>(Ny-1), [1+2</em>ry]<em>(Ny-1), [-ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
 By = diags([[ry]<em>(Ny-1), [1-2</em>ry]<em>(Ny-1), [ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))</p>
-<p>for n in range(nt):
-    u_star = np.zeros_like(u)</p>
-<pre><code>for j in range(1, Ny):
-    rhs = Bx.dot(u[1:Nx, j])
-    u_star[1:Nx, j] = spsolve(Ax, rhs)
-
-for i in range(1, Nx):
-    rhs = By.dot(u_star[i, 1:Ny])
-    u_new[i, 1:Ny] = spsolve(Ay, rhs)
-
-u[:, :] = u_new[:, :]
-</code></pre></div>
+<p>for n in range(nt):</p></div>
             </div>
         </div>
 
@@ -244,5 +233,5 @@ u[:, :] = u_new[:, :]
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-05 18:22:15.219256+00:00
+Build Date UTC : 2025-07-05 18:28:44.361381+00:00
 -->
