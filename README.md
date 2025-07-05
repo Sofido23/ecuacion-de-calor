@@ -10,7 +10,7 @@ Universidad de Costa Rica
 
 - Ricardo Jose Suarez Sancho (C17810)
 
-- Karolay..
+- Karolay Alvarado Navarro (C20359)
 
 Julio 2025 - I Semestre 2025
 
