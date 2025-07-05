@@ -64,7 +64,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#metodo-de-crank-nicolson" class="nav-link">Metodo de Crank- Nicolson</a>
+            <li class="nav-item" data-bs-level="2"><a href="#metodo-de-crank-nicolson" class="nav-link">Metodo de Crank-Nicolson</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#beneficios-y-desventajas-de-crank-nicolson" class="nav-link">Beneficios y desventajas de Crank-Nicolson</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -73,6 +77,10 @@
               </ul>
             </li>
             <li class="nav-item" data-bs-level="2"><a href="#codigo-en-python" class="nav-link">Codigo en Python</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#codigo-para-la-distribucion-de-temperatura-en-t-0100" class="nav-link">Codigo para la distribucion de temperatura en t = 0.100</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -91,7 +99,7 @@
 <p>Oscar Alvarez Poveda (C003949 </p>
 <p>Ricardo Jose Suarez Sancho (C17810)</p>
 <p>Karolay..</p>
-<p>** Julio 2025**</p>
+<p><strong>Julio 2025</strong></p>
 <h2 id="introduccion">Introduccion</h2>
 <p>El presente proyecto, referente a la ecuacion de calor en dos dimensiones, tiene como fin resolver dicha ecuacion, la cual, es una ecuacion en derivadas parciales que modela la distribucion de la temperatura en una region del plano a lo largo del tiempo. La ecuacion de calor es indispensable en la fisica y la ingenieria, puesto que describe procesos de difusion termica en medios homogeneos bajo condiciones ideales. </p>
 <p>La ecuacion de movimiento esta dada por </p>
@@ -102,17 +110,59 @@ $$</p>
 <p>En el desarrollo del proyecto, se resolvera dicha ecucion tanto en Python como en C++, aplicando asi practicas estudiadas en el curso, comi el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida y la documentacion y control de versiones con Git. </p>
 <p>Asimismo, debemos de experimentar con diferentes condiciones inciales y de frontera, y visualizar la evolucion temporal de la temperatura mediante mapas de colores. </p>
 <p>La resolucion de la ecuacion de calor en dos dimensiones, integra conocimientos teoricos y practicos en analisis numericos, programacion cientifica y visualizacion de datos, con el fin de construir una simulacion robusta y eficiente del comportamiento termico de un sistema bidimensional. </p>
-<h2 id="metodo-de-crank-nicolson">Metodo de Crank- Nicolson</h2>
-<p>Tras un largo analisis sobre los metodos posibles a utilizar para resolver la Ecuacion de calor en 2D, optamos por emplear el metodo de Crank-Nicolson.
-Puesto que este metodo posee varias ventajas, las cuales son:</p>
-<p>1) Es estable incondicionalmente: al ser un metodo implicito, es estable para cualquier tamano de paso de tiempo; lo que lo hace ideal si queremos avanzar en el tiempo sin preocuparnos de que la simulacion explote numericamente. </p>
-<p>2) Tiene segundo orden en tiempo y en espacio: esto proporciona menor error de truncamiento y resultados mas precisos con menos puntos.</p>
-<p>3) Es eficiente en Python y en C++ con las herramientas adecuadas: a pesar de que en  este metodo se debe de resolver un sistema linel en cada paso de tiempo, ese trabajo extra se compensa al usar deltas t mas grandes, se necesitan de menos pasos para llegar a una solucion con buena precision y se vuelve mas eficiente a largo plazo. </p>
-<p>4) Tiene interpretacion fisica coherente: esto quiere decir que el calor se difunde gradualmente y no abrupdamente, como puede pasar en otros metodos. </p>
+<h2 id="metodo-de-crank-nicolson">Metodo de Crank-Nicolson</h2>
+<p>Este metodo consiste en una tecnica numerica para resolver ecuaciones diferenciales parciales, especialmente la ecuacion de calor o ecuacion de difusion. Es un metodo implicito y de segundo orden; por lo que combina la precision del metodo del punto medio y la estabilidad del metodo implicito. 
+En sintesis, este metodo se basa en una promediacion entre el metodo explicito, que evalua  en el tiempo actual tn y el metodo implicito, que evalua en el siguiente tiempo tn+1. 
+En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad como funciona el metodo de Crank-Nicolson para resolver la ecuacion de calor en 2D. </p>
+<h2 id="beneficios-y-desventajas-de-crank-nicolson">Beneficios y desventajas de Crank-Nicolson</h2>
+<p>Se indicaran los beneficios y desventajas que posee el uso del metodo de Crank-Nicolson:</p>
+<p>Beneficios:</p>
+<p>1) Estabilidad incondicional: Es estable para cualquier tamano de paso en el tiempo, lo que permite hacer simulaciones con pasos grandes sin que el error explote. </p>
+<p>2) Mayor precision: Tanto el tiempo como el espacio es de segudno orden, significa que es mas preciso que los metodos de primer orden, como lo es el metodo explicito o el implicito simple. </p>
+<p>3) Simetria temporal: Este metodo es centrado en el tiempo, lo que lo hace ideal para problemas en donde se debe de conservar energia o simetria. </p>
+<p>Desventajas:</p>
+<p>1) Se requiere resolver un sistema lineal en cada paso: Con el metodo de Crank-Nicolson tenemos que resolver matrices en cada paso del tiempo, lo que es mucho mas costoso computacionalmente. </p>
+<p>2) Oscilaciones no fisicas: Si esto se aplica a problemas de condiciones inciales, puede producir oscilaciones no reales.</p>
+<p>3) Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.</p>
 <h2 id="codigo-en-c">Codigo en C++</h2>
-<p>Poner el codigo aqui </p>
 <h2 id="codigo-en-python">Codigo en Python</h2>
-<p>[Haz clic aqui para abrir el notebook del codigo de Python] (https://github.com/Sofido23/ecuacion-de-calor/blob/main/docs/codigo.py.ipynb) </p></div>
+<p>Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo.</p>
+<h2 id="codigo-para-la-distribucion-de-temperatura-en-t-0100">Codigo para la distribucion de temperatura en t = 0.100</h2>
+<p>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.sparse import diags
+from scipy.sparse.linag import spsolve</p>
+<p>Lx, Ly = 1.0, 1.0</p>
+<p>Nx, Ny = 20, 20</p>
+<p>dx, dy = Lx / Nx, Ly / Ny</p>
+<p>x = np.linspace(0, Lx, Nx+1)
+y = np.linspace(0, Ly, Ny+1)</p>
+<p>T = 0.1
+dt = 0.001
+nt = int(T / dt)</p>
+<p>alpha = 1.0</p>
+<p>u = np.zeros((Nx+1, Ny+1))
+u_new = np.zeros_like(u)</p>
+<p>X, Y = np.meshgrid(x, y, indexing='ij')</p>
+<p>u[:, :] = np.exp(-100 * ((X - 0.5)<strong>2 + (Y - 0.5)</strong>2))</p>
+<p>rx = alpha * dt / (2 * dx<strong>2)
+ry = alpha * dt / (2 * dy</strong>2)</p>
+<p>Ax = diags([[-rx]<em>(Nx-1), [1+2</em>rx]<em>(Nx-1), [-rx]</em>(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
+Bx = diags([[rx]<em>(Nx-1), [1-2</em>rx]<em>(Nx-1), [rx]</em>(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))</p>
+<p>Ay = diags([[-ry]<em>(Ny-1), [1+2</em>ry]<em>(Ny-1), [-ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
+By = diags([[ry]<em>(Ny-1), [1-2</em>ry]<em>(Ny-1), [ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))</p>
+<p>for n in range(nt):
+    u_star = np.zeros_like(u)</p>
+<pre><code>for j in range(1, Ny):
+    rhs = Bx.dot(u[1:Nx, j])
+    u_star[1:Nx, j] = spsolve(Ax, rhs)
+
+for i in range(1, Nx):
+    rhs = By.dot(u_star[i, 1:Ny])
+    u_new[i, 1:Ny] = spsolve(Ay, rhs)
+
+u[:, :] = u_new[:, :]
+</code></pre></div>
             </div>
         </div>
 
@@ -194,5 +244,5 @@ Puesto que este metodo posee varias ventajas, las cuales son:</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-05 01:54:04.740986+00:00
+Build Date UTC : 2025-07-05 18:22:15.219256+00:00
 -->
