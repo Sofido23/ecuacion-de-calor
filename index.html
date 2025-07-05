@@ -80,10 +80,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#codigo-para-la-distribucion-de-temperatura-en-t-0100" class="nav-link">Codigo para la distribucion de temperatura en t = 0.100</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -126,32 +122,7 @@ En el apartado de los codigos, se explicara a detalle los codigos realizados con
 <p>3) Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.</p>
 <h2 id="codigo-en-c">Codigo en C++</h2>
 <h2 id="codigo-en-python">Codigo en Python</h2>
-<p>Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo.</p>
-<h2 id="codigo-para-la-distribucion-de-temperatura-en-t-0100">Codigo para la distribucion de temperatura en t = 0.100</h2>
-<p>import numpy as np
-import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linag import spsolve</p>
-<p>Lx, Ly = 1.0, 1.0</p>
-<p>Nx, Ny = 20, 20</p>
-<p>dx, dy = Lx / Nx, Ly / Ny</p>
-<p>x = np.linspace(0, Lx, Nx+1)
-y = np.linspace(0, Ly, Ny+1)</p>
-<p>T = 0.1
-dt = 0.001
-nt = int(T / dt)</p>
-<p>alpha = 1.0</p>
-<p>u = np.zeros((Nx+1, Ny+1))
-u_new = np.zeros_like(u)</p>
-<p>X, Y = np.meshgrid(x, y, indexing='ij')</p>
-<p>u[:, :] = np.exp(-100 * ((X - 0.5)<strong>2 + (Y - 0.5)</strong>2))</p>
-<p>rx = alpha * dt / (2 * dx<strong>2)
-ry = alpha * dt / (2 * dy</strong>2)</p>
-<p>Ax = diags([[-rx]<em>(Nx-1), [1+2</em>rx]<em>(Nx-1), [-rx]</em>(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
-Bx = diags([[rx]<em>(Nx-1), [1-2</em>rx]<em>(Nx-1), [rx]</em>(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))</p>
-<p>Ay = diags([[-ry]<em>(Ny-1), [1+2</em>ry]<em>(Ny-1), [-ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
-By = diags([[ry]<em>(Ny-1), [1-2</em>ry]<em>(Ny-1), [ry]</em>(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))</p>
-<p>for n in range(nt):</p></div>
+<p>Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo.</p></div>
             </div>
         </div>
 
@@ -233,5 +204,5 @@ By = diags([[ry]<em>(Ny-1), [1-2</em>ry]<em>(Ny-1), [ry]</em>(Ny-1)], [-1,0,1], 
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-05 18:28:44.361381+00:00
+Build Date UTC : 2025-07-05 18:32:55.037831+00:00
 -->
