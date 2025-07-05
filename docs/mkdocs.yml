@@ -1,5 +1,8 @@
 site_name: Proyecto final Computacional
 
+theme:
+  name: material
+
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
