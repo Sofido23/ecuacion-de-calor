@@ -15,7 +15,7 @@ Ricardo Jose Suarez Sancho (C17810)
 Karolay..
 
 
-** Julio 2025**
+**Julio 2025**
 
 
 ## Introduccion
@@ -37,26 +37,88 @@ Asimismo, debemos de experimentar con diferentes condiciones inciales y de front
 La resolucion de la ecuacion de calor en dos dimensiones, integra conocimientos teoricos y practicos en analisis numericos, programacion cientifica y visualizacion de datos, con el fin de construir una simulacion robusta y eficiente del comportamiento termico de un sistema bidimensional. 
 
 
-## Metodo de Crank- Nicolson
+## Metodo de Crank-Nicolson
 
-Tras un largo analisis sobre los metodos posibles a utilizar para resolver la Ecuacion de calor en 2D, optamos por emplear el metodo de Crank-Nicolson.
-Puesto que este metodo posee varias ventajas, las cuales son:
-
-1) Es estable incondicionalmente: al ser un metodo implicito, es estable para cualquier tamano de paso de tiempo; lo que lo hace ideal si queremos avanzar en el tiempo sin preocuparnos de que la simulacion explote numericamente. 
-
-2) Tiene segundo orden en tiempo y en espacio: esto proporciona menor error de truncamiento y resultados mas precisos con menos puntos.
-
-3) Es eficiente en Python y en C++ con las herramientas adecuadas: a pesar de que en  este metodo se debe de resolver un sistema linel en cada paso de tiempo, ese trabajo extra se compensa al usar deltas t mas grandes, se necesitan de menos pasos para llegar a una solucion con buena precision y se vuelve mas eficiente a largo plazo. 
-
-4) Tiene interpretacion fisica coherente: esto quiere decir que el calor se difunde gradualmente y no abrupdamente, como puede pasar en otros metodos. 
+Este metodo consiste en una tecnica numerica para resolver ecuaciones diferenciales parciales, especialmente la ecuacion de calor o ecuacion de difusion. Es un metodo implicito y de segundo orden; por lo que combina la precision del metodo del punto medio y la estabilidad del metodo implicito. 
+En sintesis, este metodo se basa en una promediacion entre el metodo explicito, que evalua  en el tiempo actual tn y el metodo implicito, que evalua en el siguiente tiempo tn+1. 
+En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad como funciona el metodo de Crank-Nicolson para resolver la ecuacion de calor en 2D. 
   
+  
+## Beneficios y desventajas de Crank-Nicolson 
+Se indicaran los beneficios y desventajas que posee el uso del metodo de Crank-Nicolson:
 
+Beneficios:
+
+1) Estabilidad incondicional: Es estable para cualquier tamano de paso en el tiempo, lo que permite hacer simulaciones con pasos grandes sin que el error explote. 
+
+2) Mayor precision: Tanto el tiempo como el espacio es de segudno orden, significa que es mas preciso que los metodos de primer orden, como lo es el metodo explicito o el implicito simple. 
+
+3) Simetria temporal: Este metodo es centrado en el tiempo, lo que lo hace ideal para problemas en donde se debe de conservar energia o simetria. 
+
+Desventajas:
+
+1) Se requiere resolver un sistema lineal en cada paso: Con el metodo de Crank-Nicolson tenemos que resolver matrices en cada paso del tiempo, lo que es mucho mas costoso computacionalmente. 
+
+2) Oscilaciones no fisicas: Si esto se aplica a problemas de condiciones inciales, puede producir oscilaciones no reales.
+
+3) Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.
+ 
 
 ## Codigo en C++
 
-Poner el codigo aqui 
+
 
 ## Codigo en Python
+Dentro de este mismo repositorio hay un archivo.py en donde se encuentra el codigo en Python. Esta seccion se basa en la explicacion de dicho codigo.
 
-[Haz clic aqui para abrir el notebook del codigo de Python] (https://github.com/Sofido23/ecuacion-de-calor/blob/main/docs/codigo.py.ipynb) 
+##Codigo para la distribucion de temperatura en t = 0.100
 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.sparse import diags
+from scipy.sparse.linag import spsolve
+ 
+Lx, Ly = 1.0, 1.0
+
+Nx, Ny = 20, 20
+
+dx, dy = Lx / Nx, Ly / Ny
+
+x = np.linspace(0, Lx, Nx+1)
+y = np.linspace(0, Ly, Ny+1)
+
+T = 0.1
+dt = 0.001
+nt = int(T / dt)
+
+alpha = 1.0
+
+u = np.zeros((Nx+1, Ny+1))
+u_new = np.zeros_like(u)
+
+X, Y = np.meshgrid(x, y, indexing='ij')
+
+u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
+
+rx = alpha * dt / (2 * dx**2)
+ry = alpha * dt / (2 * dy**2)
+
+Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
+Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))
+
+Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
+By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
+
+for n in range(nt):
+    u_star = np.zeros_like(u)
+
+    for j in range(1, Ny):
+        rhs = Bx.dot(u[1:Nx, j])
+        u_star[1:Nx, j] = spsolve(Ax, rhs)
+
+    for i in range(1, Nx):
+        rhs = By.dot(u_star[i, 1:Ny])
+        u_new[i, 1:Ny] = spsolve(Ay, rhs)
+
+    u[:, :] = u_new[:, :]
+                          
