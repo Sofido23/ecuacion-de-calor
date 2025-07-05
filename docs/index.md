@@ -54,9 +54,9 @@ Puesto que este metodo posee varias ventajas, las cuales son:
 
 ## Codigo en C++
 
-ifjekljfew
+Poner el codigo aqui 
 
 ## Codigo en Python
 
-[Haz clic aqui para abrir el notebook del codigo de Python](https://github.com/Sofido23/ecuacion-de-calor/blob/main/docs/codigo.py.ipynb) 
+[Haz clic aqui para abrir el notebook del codigo de Python] (https://github.com/Sofido23/ecuacion-de-calor/blob/main/docs/codigo.py.ipynb) 
 
