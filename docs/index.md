@@ -110,15 +110,4 @@ Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1,
 By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))
 
 for n in range(nt):
-    u_star = np.zeros_like(u)
-
-    for j in range(1, Ny):
-        rhs = Bx.dot(u[1:Nx, j])
-        u_star[1:Nx, j] = spsolve(Ax, rhs)
-
-    for i in range(1, Nx):
-        rhs = By.dot(u_star[i, 1:Ny])
-        u_new[i, 1:Ny] = spsolve(Ay, rhs)
-
-    u[:, :] = u_new[:, :]
-                          
+  
