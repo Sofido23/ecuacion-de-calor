@@ -14,4 +14,4 @@ Universidad de Costa Rica
 
 Julio 2025 - I Semestre 2025
 
-El siguiente proyecto consiste en resolver la ecuación de calor en dos dimensiones mediante de la implementación de soluciones con Python y C++, así como la graficación de los resultados obtenidos para Python en 3-D.
+Este trabjo forma parte del proyecto final del curso FS-0432 y tiene como objetivo resolver la ecuación de calor en dos dimensiones utilizando los lenguajes de programación Python y C++, implementando el método de Crank Nicolson considerando distintas condiciones, así como la graficación de los resultados obtenidos para Python en 3-D.
