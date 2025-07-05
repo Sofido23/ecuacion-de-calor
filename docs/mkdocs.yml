@@ -2,6 +2,9 @@ site_name: Proyecto final Computacional
 
 theme:
   name: material
+  palette:
+    primary: indigo
+    accent: pink
 
 markdown_extensions:
   - pymdownx.arithmatex:
