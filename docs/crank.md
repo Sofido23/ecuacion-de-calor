@@ -7,10 +7,9 @@ En sintesis, este metodo se basa en una promediacion entre el metodo explicito, 
 En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad como funciona el metodo de Crank-Nicolson para resolver la ecuacion de calor en 2D. 
   
   
-## Beneficios y desventajas de Crank-Nicolson 
-Se indicaran los beneficios y desventajas que posee el uso del metodo de Crank-Nicolson:
+## Ventajas y desventajas de Crank-Nicolson 
 
-Beneficios:
+Ventajas:
 
 1) Estabilidad incondicional: Es estable para cualquier tamano de paso en el tiempo, lo que permite hacer simulaciones con pasos grandes sin que el error explote. 
 
@@ -25,4 +24,8 @@ Desventajas:
 2) Oscilaciones no fisicas: Si esto se aplica a problemas de condiciones inciales, puede producir oscilaciones no reales.
 
 3) Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.
- 
+
+ ## Matriz Tridiagonal
+ En el proceso de implementación del método de Crank-Nicolson para la resolución de la ecuación de calor, es necesario resolver en cada paso temporal un sistema lineal de ecuaciones cuya matriz asociada es tridiagonal. 
+
+ Una matriz tridiagonal es una matriz cuadrada en la que solo los elementos de la diagonal principal y las dos diagonales adyacentes (la superior y la inferior) pueden tener valores distintos de cero. Este patrón de estructura permite representar de manera eficiente operadores como el Laplaciano en una dimensión espacial. En el caso del esquema de Crank-Nicolson, este tipo de matriz se forma tanto en la parte implícita como en la parte explícita del método.
