@@ -64,7 +64,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#porque-ese-metodo" class="nav-link">Porque ese metodo</a>
+            <li class="nav-item" data-bs-level="2"><a href="#metodo-de-crank-nicolson" class="nav-link">Metodo de Crank- Nicolson</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -88,8 +88,8 @@
 <p><strong>Universidad de Costa Rica</strong></p>
 <p><strong>Nombre de los estudiantes:</strong></p>
 <p>Alba Sofia Rojas Doza (C36873)</p>
-<p>Oscar Alvarez... </p>
-<p>Ricardo...</p>
+<p>Oscar Alvarez Poveda (C003949 </p>
+<p>Ricardo Jose Suarez Sancho (C17810)</p>
 <p>Karolay..</p>
 <p><strong>2025</strong></p>
 <h2 id="introduccion">Introduccion</h2>
@@ -102,7 +102,13 @@ $$</p>
 <p>En el desarrollo del proyecto, se resolvera dicha ecucion tanto en Python como en C++, aplicando asi practicas estudiadas en el curso, comi el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida y la documentacion y control de versiones con Git. </p>
 <p>Asimismo, debemos de experimentar con diferentes condiciones inciales y de frontera, y visualizar la evolucion temporal de la temperatura mediante mapas de colores. </p>
 <p>La resolucion de la ecuacion de calor en dos dimensiones, integra conocimientos teoricos y practicos en analisis numericos, programacion cientifica y visualizacion de datos, con el fin de construir una simulacion robusta y eficiente del comportamiento termico de un sistema bidimensional. </p>
-<h2 id="porque-ese-metodo">Porque ese metodo</h2>
+<h2 id="metodo-de-crank-nicolson">Metodo de Crank- Nicolson</h2>
+<p>Tras un largo analisis sobre los metodos posibles a utilizar para resolver la Ecuacion de calor en 2D, optamos por emplear el metodo de Crank-Nicolson.
+Puesto que este metodo posee varias ventajas, las cuales son:</p>
+<p>1) Es estable incondicionalmente: al ser un metodo implicito, es estable para cualquier tamano de paso de tiempo; lo que lo hace ideal si queremos avanzar en el tiempo sin preocuparnos de que la simulacion explote numericamente. </p>
+<p>2) Tiene segundo orden en tiempo y en espacio: esto proporciona menor error de truncamiento y resultados mas precisos con menos puntos.</p>
+<p>3) Es eficiente en Python y en C++ con las herramientas adecuadas: a pesar de que en  este metodo se debe de resolver un sistema linel en cada paso de tiempo, ese trabajo extra se compensa al usar deltas t mas grandes, se necesitan de menos pasos para llegar a una solucion con buena precision y se vuelve mas eficiente a largo plazo. </p>
+<p>4) Tiene interpretacion fisica coherente: esto quiere decir que el calor se difunde gradualmente y no abrupdamente, como puede pasar en otros metodos. </p>
 <h2 id="codigo-en-c">Codigo en C++</h2>
 <p>[Haz clic aqui para abrir el notebook del codigo de Python] (https://github.com/Sofido23/ecuacion-de-calor/blob/main/docs/codigo.py.ipynb) </p>
 <h2 id="codigo-en-python">Codigo en Python</h2>
@@ -188,5 +194,5 @@ $$</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-04 23:26:46.853759+00:00
+Build Date UTC : 2025-07-05 01:02:09.980774+00:00
 -->
