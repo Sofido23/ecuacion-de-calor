@@ -50,7 +50,7 @@ Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, N
 Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))  # Implícito en y
 By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))    # Explícito en y
 
-# Comienza el lazo de integración temporal
+Comienza el lazo de integración temporal
 for n in range(nt):
     # Paso intermedio: resolvemos en la dirección x, manteniendo y fijo
     u_star = np.zeros_like(u)  # Matriz temporal para almacenar resultados intermedios
