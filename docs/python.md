@@ -3,6 +3,7 @@
 ## Grafico de la distribucion de la temperatura en t=0.100:
 
 Primeramente, debemos de realizar las importaciones de las bibliotecas. 
+
 Numpy para trabajar con arrays, matplotlib.pyplot para la visualizacion de la solucion, scipy.sparse.diags para construir matrices dispersas tridiagonales y spsolve para resolver sistemas lineales dispersos. 
 
     import numpy as np
@@ -10,36 +11,47 @@ Numpy para trabajar con arrays, matplotlib.pyplot para la visualizacion de la so
     from scipy.sparse import diags
     from scipy.sparse.linalg import spsolve
 
-    #Definimos las dimensiones físicas del dominio en x e y
-    Lx, Ly = 1.0, 1.0  # Estos son los largos del dominio en x e y respectivamente (dominio de 1x1 unidad)
+Definimos las dimensiones físicas del dominio en x en y.
+Estos son los largos del dominio en x e y respectivamente (dominio de 1x1 unidad), es decir, la longitud del dominio en x y en y.
 
-    # Definimos la cantidad de divisiones del dominio (número de puntos menos uno)
-    Nx, Ny = 20, 20  # Cantidad de divisiones en las direcciones x e y
-
-    # Calculamos el tamaño de paso espacial en x y en y
-    dx, dy = Lx / Nx, Ly / Ny  # Distancia entre nodos consecutivos en cada eje
+    Lx, Ly = 1.0, 1.0  
     
-    # Creamos los arreglos de coordenadas espaciales
-    x = np.linspace(0, Lx, Nx+1)  # Puntos equiespaciados de 0 a Lx (incluyendo extremos)
-    y = np.linspace(0, Ly, Ny+1)  # Puntos equiespaciados de 0 a Ly (incluyendo extremos)
-    
-    # Parámetros de tiempo para la simulación
-    T = 0.1      # Tiempo total de simulación
-    dt = 0.001   # Paso temporal
-    nt = int(T / dt)  # Número total de pasos de tiempo
+Definimos la cantidad de divisiones del dominio
 
-    # Constante de difusión térmica (puede representar conductividad térmica, por ejemplo)
+    Nx, Ny = 20, 20  
+
+Calculamos el tamaño de paso espacial en x y en y. Es decir, la distancia entre nodos consecutivos en cada eje
+
+    dx, dy = Lx / Nx, Ly / Ny  
+    
+Creamos los arreglos de coordenadas espaciales. 
+Son los puntos equiespaciados de 0 a Lx (incluyendo extremos) y los puntos equiespaciados de 0 a Ly (incluyendo extremos). 
+
+    x = np.linspace(0, Lx, Nx+1) 
+    y = np.linspace(0, Ly, Ny+1)  
+    
+Parámetros de tiempo para la simulación. En donde T es el tiempo total de simulación, dt es el paso temporal y nt el número total de pasos de tiempo.
+
+    T = 0.1     
+    dt = 0.001  
+    nt = int(T / dt)  
+
+Constante de difusión térmica (puede representar conductividad térmica, por ejemplo)
+
     alpha = 1.0
     
-    # Inicialización de la matriz de temperatura u en todo el dominio
-    u = np.zeros((Nx+1, Ny+1))       # Temperatura inicial en t = 0
-    u_new = np.zeros_like(u)         # Matriz que contendrá la temperatura actualizada
+Inicialización de la matriz de temperatura u en todo el dominio. Se crea la condicion inicial. 
+En donde u es la temperatura inicial en t = 0, u_new es la matriz que contendrá la temperatura actualizada.
+X , Y genera la malla 2D (X, Y) para aplicar condiciones iniciales y u[:, :] asigna la condición inicial, es decir, se crea un pulso gaussiano centrado en (0.5, 0.5) que representa el calor localizado. 
+
+    u = np.zeros((Nx+1, Ny+1))       
+    u_new = np.zeros_like(u)         
     
-    # Generamos la malla 2D (X, Y) para aplicar condiciones iniciales
     X, Y = np.meshgrid(x, y, indexing='ij')  # 'ij' para mantener coherencia con el orden u[i,j]
     
-    # Asignamos condición inicial: un pulso gaussiano centrado en (0.5, 0.5)
     u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))  # Pico de calor localizado
+
+    
     
     # Cálculo de parámetros auxiliares para Crank-Nicolson en x e y
     rx = alpha * dt / (2 * dx**2)  # Parámetro de difusión en x, dividido entre 2 por Crank-Nicolson
