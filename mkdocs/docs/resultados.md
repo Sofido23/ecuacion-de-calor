@@ -7,3 +7,5 @@
 ![Grafico de resultados](imagenes/G2.jpg) 
 
 ![Grafico de resultados](imagenes/G3.jpg) 
+
+![Simulacion](imagenes/AA.gif) 
