@@ -2,7 +2,8 @@
 
 ## Grafico de la distribucion de la temperatura en t=0.100:
 
-Primeramente,kdsjcfsd
+Primeramente, debemos de realizar las importaciones de las bibliotecas. 
+Numpy para trabajar con arrays, matplotlib.pyplot para la visualizacion de la solucion, scipy.sparse.diags para construir matrices dispersas tridiagonales y spsolve para resolver sistemas lineales dispersos. 
 
     import numpy as np
     import matplotlib.pyplot as plt
