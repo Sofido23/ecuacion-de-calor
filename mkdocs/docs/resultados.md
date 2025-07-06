@@ -3,6 +3,8 @@
 ## Python 
 ![Grafico de resultado](1.G.png) 
 
+jhaskldaks
+
 ![Grafico de resultado](2.G.jpg) 
 
 ![Grafico de resultado](3.G.jpg) 
