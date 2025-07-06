@@ -1,4 +1,4 @@
-# Documentacion de C++
+# Solución en C++
 
 Para esta etapa se creo la documentacion de forma automatica con Doxyge, esto ya que mkdocs no hace documentacion automatica para C++.
 
