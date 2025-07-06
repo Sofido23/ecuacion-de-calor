@@ -1,6 +1,6 @@
-#Proyecto final
+## Proyecto final
 
-#Ecuacion de Calor en Dos Dimensiones
+## Ecuacion de Calor en Dos Dimensiones
 
 **Universidad de Costa Rica**
 
@@ -20,7 +20,7 @@ Karolay Alvarado Navarro (C20359)
 
 ## Introduccion
 
-El presente proyecto, referente a la ecuacion de calor en dos dimensiones, tiene como fin resolver dicha ecuacion, la cual, es una ecuacion en derivadas parciales que modela la distribucion de la temperatura en una region del plano a lo largo del tiempo. La ecuacion de calor es indispensable en la fisica y la ingenieria, puesto que describe procesos de difusion termica en medios homogeneos bajo condiciones ideales. 
+El presente proyecto, referente a la ecuacion de calor en dos dimensiones, tiene como fin resolver dicha ecuacion, la cual, es una ecuacion en derivadas parciales que modela la distribucion de la temperatura en una region del plano a lo largo del tiempo. La ecuacion de calor es indispensable en la física y la ingenieria, puesto que describe procesos de difusion termica en medios homogeneos bajo condiciones ideales. 
 
 La ecuacion de movimiento esta dada por 
 
@@ -30,7 +30,7 @@ $$
 
 en donde u(x,y,t) representa la temperatura en la posicion (x,y) en el tiempo t y c es una constante que depende del material. 
 
-En el desarrollo del proyecto, se resolvera dicha ecucion tanto en Python como en C++, aplicando asi practicas estudiadas en el curso, comi el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida y la documentacion y control de versiones con Git. 
+En el desarrollo del proyecto, se resolvera dicha ecucion tanto en Python como en C++, aplicando así prácticas estudiadas en el curso, como el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida y la documentacion y control de versiones con Git. 
 
 Asimismo, debemos de experimentar con diferentes condiciones inciales y de frontera, y visualizar la evolucion temporal de la temperatura mediante mapas de colores. 
 
