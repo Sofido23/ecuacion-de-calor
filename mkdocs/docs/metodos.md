@@ -37,12 +37,4 @@ Esto reduce el problema de 2D a varios problemas 1D, que son mucho más fáciles
 
 <img src="imagenes/thomas.png" alt="Método de Thomas" width="550">
 
- **Ventajas:**
- 
- **1)** Al trabajar con solo tres vectores (diagonal principal, inferior y superior), se evita almacenar la matriz completa reduciendo el consumo de memoria.\
- **2)** Con condiciones de frontera de tipo Dirichlet (temperatura fija en los extremos), la construcción de la matriz tridiagonal se mantiene sencilla, lo que facilita la implementación del algoritmo.
-
- **Desventajas:**
- 
- **1)** Requiere una implementación cuidadosa para evitar errores en la factorización y la sustitución hacia atrás.\
- **2)** Para condiciones de frontera diferentes a las de tipo Dirichlet, como condiciones de Neumann o mixtas, la construcción de la matriz tridiagonal puede volverse más complicada y requerir modificaciones adicionales en la implementación.
+ Al trabajar con solo tres vectores (diagonal principal, inferior y superior), se evita almacenar la matriz completa reduciendo el consumo de memoria.
