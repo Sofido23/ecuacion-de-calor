@@ -2,10 +2,10 @@
 
 ## Grafico de la distribucion de la temperatura en t=0.100:
 
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linalg import spsolve
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.sparse import diags
+    from scipy.sparse.linalg import spsolve
 
 Definimos las dimensiones físicas del dominio en x e y
 Lx, Ly = 1.0, 1.0  # Estos son los largos del dominio en x e y respectivamente (dominio de 1x1 unidad)
