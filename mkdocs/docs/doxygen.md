@@ -20,7 +20,7 @@ Se utilizaron las siguientes bibliotecas:
 #include <omp.h>
 ```
 
-Función que crea una matriz llena de ceros, y la almacena en 1 vector de 1D.\
+**Función que crea una matriz llena de ceros, y la almacena en 1 vector de 1D**\
 `n` Número de filas.\
 `m` Número de columnas.\
 `return std::vector<double>` Se retorna un vector `nxm` que contiene los arreglos de ceros
@@ -31,13 +31,10 @@ std::vector<double> crearMatrizCeros(int n, int m) {
 }
 ```
 
-Función que imprime la matriz creada anteriormente.
- details 
-Se imprime en la consola la matriz nxn contenida en un vector de 1D. Para esto se utilzan 3 
-cifras decimales por cada entrada de la matriz.
-
-matriz Vector que contiene la matriz creada previamente de forma lineal.
-n Número de filas de la matriz.
+**Función que imprime la matriz creada anteriormente**\
+Se imprime en la consola la matriz nxn contenida en un vector de 1D. Para esto se utilzan 3 cifras decimales por cada entrada de la matriz.\
+`matriz` Vector que contiene la matriz creada previamente de forma lineal.\
+`n` Número de filas de la matriz.
 
 ```cpp
 void imprimirMatriz(const std::vector<double>& matriz, int n) {
@@ -51,12 +48,12 @@ void imprimirMatriz(const std::vector<double>& matriz, int n) {
 }
 ```
 
-Función que multiplica la matriz anteior por un vector.
+**Función que multiplica la matriz anteior por un vector.**\
 Se hace una multiplicación entre la matriz guardada en el vector 1D y un vector de las mismas dimensiones. 
-El resultado obtenido de la multiplicación sobreescribe el vector original utilizado.
-matriz Vector que contiene la matriz creada previamente de forma lineal.
-vec Vector por el cual se multiplica la matriz, y en el cual se guardan los resultados de la multiplicación.
-n Número de filas de la matriz.
+El resultado obtenido de la multiplicación sobreescribe el vector original utilizado.\
+`matriz` Vector que contiene la matriz creada previamente de forma lineal.\
+`vec` Vector por el cual se multiplica la matriz, y en el cual se guardan los resultados de la multiplicación.\
+`n` Número de filas de la matriz.\
 
 ```cpp
 void multiplicarMatrizVector(const std::vector<double>& matriz, std::vector<double>& vec, int n) {
