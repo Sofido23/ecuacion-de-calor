@@ -240,4 +240,190 @@ Visualizacion en 2D y 3D
             plt.show()
             
         else:
-            print(f"Warning: Snapshot for time {t:.3f} not found.")  #Si no se pudo guardar la instantanea de un tiempo solicitado. 
+            print(f"Warning: Snapshot for time {t:.3f} not found.")  #Si no se pudo guardar la instantanea de un tiempo solicitado.
+
+
+
+## Grafico de la evolucion de la temperatura 
+
+Agregamos FuncAnimation el cual permite crear animaciones cuadro por cuadro.
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.sparse import diags
+    from scipy.sparse.linalg import spsolve
+    from matplotlib.animation import FuncAnimation
+    
+Parámetros del problema, en donde se define el dominio y lo divide en 50 partes por eje, el resultado es 51 puntos en cada direccion (Nx+1) y X, Y es una malla 2D de coordenadas para evaluar las funciones. 
+    
+    Lx, Ly = 1.0, 1.0
+    Nx, Ny = 50, 50  
+    dx, dy = Lx / Nx, Ly / Ny
+    x = np.linspace(0, Lx, Nx+1)
+    y = np.linspace(0, Ly, Ny+1)
+    X, Y = np.meshgrid(x, y, indexing='ij')
+
+Simulacion de 0.1 segundos con paso de 0.001
+    
+    T = 0.1
+    dt = 0.001
+    nt = int(T / dt)
+    alpha = 1.0
+    
+Condición inicial: pulso gaussiano, es decir, se crea un pulso gaussiano de calor centrado en (0.5, 0.5) y u_new es la matriz en donde se guarda la actualizacion. 
+    
+    u = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
+    u_new = np.zeros_like(u)
+
+Condición de frontera: Implementa las condiciones de frontera tipo Dirichlet en donde la temperatura es fija en 0 en todos los bordes. 
+    
+    def aplicar_cf(u):
+        u[0, :] = 0
+        u[-1, :] = 0
+        u[:, 0] = 0
+        u[:, -1] = 0
+    
+Construcción de matrices, estas son las matrices tridiagonales. 
+    
+    rx = alpha * dt / (2 * dx**2)
+    ry = alpha * dt / (2 * dy**2) # Changed | to *
+    
+    Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
+    Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
+    
+    Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
+    By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
+ 
+Evolución temporal, snapshots es la lista en donde guardamos el estado del sistema y se guarda cada 10 pasos de tiempo. 
+    
+    snapshots = []
+    guardar_cada = 10  
+
+Aplica condiciones de frontera y prepara u_star, el cual es el paso intermedio en x. 
+    
+    for n in range(nt):
+        aplicar_cf(u)
+        u_star = np.zeros_like(u)
+
+Para cada fila fija (j), resuelve en x y spsolve resuelve el sistema lineal disperso. 
+    
+        for j in range(1, Ny):
+            rhs = Bx.dot(u[1:Nx, j])
+            u_star[1:Nx, j] = spsolve(Ax, rhs)
+
+Aplica condiciones al paso intermedio y luego resuelve en direccion y para cada columna fija en i. 
+    
+        aplicar_cf(u_star)
+    
+        for i in range(1, Nx):
+            rhs = By.dot(u_star[i, 1:Ny])
+            u_new[i, 1:Ny] = spsolve(Ay, rhs)
+
+Aplica condiciones y actualiza la solucion total. 
+    
+        aplicar_cf(u_new)
+        u[:, :] = u_new[:, :]
+
+Guarda el estado actual cada 10 pasos
+    
+        if n % guardar_cada == 0:
+            snapshots.append(u.copy())
+    
+Animación
+    
+    print(f"Number of snapshots saved: {len(snapshots)}") #informa cuantas imagenes se guardaron
+
+Crea la figura y primer mapa de contorno
+    
+    fig, ax = plt.subplots(figsize=(6, 5))
+    cp = ax.contourf(X, Y, snapshots[0], 20, cmap='hot')
+    cb = plt.colorbar(cp)
+    ax.set_title("Evolución de la temperatura")
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+
+Funcion para actualizar la animacion; se llama automaticamente para cada cuadro, borra el grafico anterior (ax.clear()), dibuja el nuevo contorno y actualiza el titulo, devuelve los elementos del contorno para que FuncAnimation funcione. 
+    
+    def update(frame):
+        print(f"Accessing frame: {frame}") # Added print statement
+        ax.clear()
+        cp = ax.contourf(X, Y, snapshots[frame], 20, cmap='hot')
+        ax.set_title(f"t = {frame * guardar_cada * dt:.3f} s")
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+        return cp.collections
+
+Crea la animacion:
+    
+    anim = FuncAnimation(fig, update, frames=len(snapshots), interval=80)
+    plt.tight_layout()
+    plt.show()
+    
+Para guardar como .mp4 o .gif:
+    
+    # anim.save("difusion_calor.mp4", writer="ffmpeg", fps=20)
+    # anim.save("difusion_calor.gif", writer="pillow", fps=20)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
