@@ -21,8 +21,12 @@ En el apartado de los codigos, se explicara a detalle los codigos realizados con
 **3)** Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.
 
 ## Alternating Direction Implicit (ADI)
+Es un método que se utiliza para resolver más fácilmente la ecuación de calor en 2D.
+En lugar de resolver una ecuación implícita en dos dimensiones al mismo tiempo (lo que da lugar a una matriz muy grande), el método ADI divide el paso de tiempo en dos mitades:
+* En la primera mitad del paso de tiempo, haces el método implícito solo en la dirección $x$, y dejas $y$ explícito.
+* En la segunda mitad, haces lo mismo, pero ahora $y$ es implícito y $x$ explícito.
 
-
+Esto reduce el problema de 2D a varios problemas 1D, que son mucho más fáciles de resolver. Cuando se utiliza ADI, en cada paso intermedio es necsario resolver muchos sistemas 1D implícitos (uno por cada fila o columna) con forma tridiagonal.
 
  ## Matriz Tridiagonal
  En el proceso de implementación del método de Crank-Nicolson para la resolución de la ecuación de calor, es necesario resolver en cada paso temporal un sistema lineal de ecuaciones cuya matriz asociada es tridiagonal. 
