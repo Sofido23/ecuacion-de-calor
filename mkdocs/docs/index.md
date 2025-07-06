@@ -32,10 +32,9 @@ Este modelo es válido bajo condiciones ideales, como materiales homogéneos, si
 
 Además,  permite analizar el comportamiento térmico de sistemas bidimensionales sujetos a distintas condiciones iniciales y de frontera.
 
-En el desarrollo del proyecto, se resolvera dicha ecución tanto en Python como en C++, aplicando así prácticas estudiadas en el curso, como el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida y la documentacion y control de versiones con Git. 
+En el desarrollo del proyecto, se resolvera dicha ecuación tanto en Python como en C++, aplicando así prácticas estudiadas en el curso, como el uso apropiado de recursos de memoria, prinicipios de programacion orientada a objetos, paralelismo en memoria compartida, la documentacion y control de versiones con Git. 
 
 Asimismo, debemos de experimentar con diferentes condiciones inciales y de frontera, y visualizar la evolucion temporal de la temperatura mediante mapas de colores. 
-
 
 
 
