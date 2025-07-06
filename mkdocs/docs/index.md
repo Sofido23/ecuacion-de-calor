@@ -22,7 +22,7 @@ Karolay Alvarado Navarro (C20359)
 
 La ecuación de calor en dos dimensiones es una ecuación en derivadas parciales de segundo orden que describe la evolución temporal de la temperatura en una región del espacio bajo condiciones físicas ideales. Esta ecuación toma la forma:
 
- <p$\frac{\partial u}{\partial t} = c^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)$</p>
+ <p $\frac{\partial u}{\partial t} = c^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)$ </p>
 
 en donde $u(x,y,t)$ representa la temperatura en la posicion $(x,y)$ en el tiempo $t$ y $c$ es una constante que depende del material y $\Delta^2$ es el operador Laplaciano, que en dos dimensiones toma la forma:
 
