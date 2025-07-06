@@ -12,3 +12,10 @@ Esta es una distribucion de temperatura con forma de campana gaussiana centrada 
 
 **3) Barra Centrada**
 
+## Condiciones de Frontera 
+
+**1) Dirichlet**
+
+**2) Neumann**
+
+**3) Robin**
