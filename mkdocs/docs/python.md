@@ -216,6 +216,7 @@ Visualizacion en 2D y 3D
             u_plot = snapshots_dict[t]
     
 2D
+
             plt.figure(figsize=(6, 5))
             cp = plt.contourf(X, Y, u_plot, 20, cmap='hot')
             plt.colorbar(cp)
@@ -226,6 +227,7 @@ Visualizacion en 2D y 3D
             plt.show()
     
 3D
+
             fig = plt.figure(figsize=(8, 6))
             ax = fig.add_subplot(111, projection='3d')
             surf = ax.plot_surface(X, Y, u_plot, cmap='hot', edgecolor='k', linewidth=0.3)
