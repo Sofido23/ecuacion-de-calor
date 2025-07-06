@@ -236,5 +236,6 @@ Visualizacion en 2D y 3D
             fig.colorbar(surf, shrink=0.5, aspect=10)
             plt.tight_layout()
             plt.show()
+            
         else:
             print(f"Warning: Snapshot for time {t:.3f} not found.")  #Si no se pudo guardar la instantanea de un tiempo solicitado. 
