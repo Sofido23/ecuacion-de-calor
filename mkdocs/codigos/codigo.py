@@ -1,261 +1,146 @@
-#Grafico de la distribucion de temperatura en t=0.100
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linalg import spsolve
-
-Lx, Ly = 1.0, 1.0 
-Nx, Ny = 20, 20 
-dx, dy = Lx / Nx, Ly / Ny  
-
-x = np.linspace(0, Lx, Nx+1)  
-y = np.linspace(0, Ly, Ny+1)  
-
-T = 0.1     
-dt = 0.001   
-nt = int(T / dt) 
-alpha = 1.0
-
-u = np.zeros((Nx+1, Ny+1))      
-u_new = np.zeros_like(u)         
-
-X, Y = np.meshgrid(x, y, indexing='ij')  
-
-u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))  
-
-rx = alpha * dt / (2 * dx**2)  
-ry = alpha * dt / (2 * dy**2)  
-
-Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))  
-Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))    
-
-Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))  
-By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))    
-
-for n in range(nt):
-    u_star = np.zeros_like(u)  
-    
-    for j in range(1, Ny):
-        rhs = Bx.dot(u[1:Nx, j])              
-        u_star[1:Nx, j] = spsolve(Ax, rhs)    
-        
-    for i in range(1, Nx):
-        rhs = By.dot(u_star[i, 1:Ny])         
-        u_new[i, 1:Ny] = spsolve(Ay, rhs)     
-
-    u[:, :] = u_new[:, :]  
-
-plt.figure(figsize=(6,5))
-cp = plt.contourf(X, Y, u, 20, cmap='hot')
-plt.colorbar(cp)
-plt.title("Distribución de temperatura en t = {:.3f}".format(T))
-plt.xlabel("x")
-plt.ylabel("y")
-plt.show()
-
-
-
-#Graficos en 2D y 3D en distintos tiempos
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linalg import spsolve
-from mpl_toolkits.mplot3d import Axes3D  
-
-Lx, Ly = 1.0, 1.0
-Nx, Ny = 20, 20
-dx, dy = Lx / Nx, Ly / Ny
-
-x = np.linspace(0, Lx, Nx+1)
-y = np.linspace(0, Ly, Ny+1)
-X, Y = np.meshgrid(x, y, indexing='ij')
-
-T = 0.1
-dt = 0.001
-nt = int(T / dt)
-alpha = 1.0
-
-ci_opcion = 'gaussiana'    # 'gradiente', 'doble_pulso'
-cf_opcion = 'dirichlet'    # 'neumann', 'robin'
-
-u = np.zeros((Nx+1, Ny+1))
-u_new = np.zeros_like(u)
-
-if ci_opcion == 'gaussiana':
-    u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
-elif ci_opcion == 'gradiente':
-    u[:, :] = X
-elif ci_opcion == 'doble_pulso':
-    u[:, :] = np.exp(-400 * ((X - 0.25)**2 + (Y - 0.75)**2)) + np.exp(-400 * ((X - 0.75)**2 + (Y - 0.25)**2))
-
-rx = alpha * dt / (2 * dx**2)
-ry = alpha * dt / (2 * dy**2)
-
-Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
-Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
-
-Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
-By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
-
-def aplicar_cf(u):
-    if cf_opcion == 'dirichlet':
-        u[0, :] = 0
-        u[-1, :] = 0
-        u[:, 0] = 0
-        u[:, -1] = 0
-    elif cf_opcion == 'neumann':
-        u[0, :] = u[1, :]
-        u[-1, :] = u[-2, :]
-        u[:, 0] = u[:, 1]
-        u[:, -1] = u[:, -2]
-    elif cf_opcion == 'robin':
-        beta = 1.0
-        u[0, :] = u[1, :] / (1 + beta * dx)
-        u[-1, :] = u[-2, :] / (1 + beta * dx)
-        u[:, 0] = u[:, 1] / (1 + beta * dy)
-        u[:, -1] = u[:, -2] / (1 + beta * dy)
-
-snapshots_dict = {}  
-t_snapshots = [0.01, 0.025, 0.05, 0.1]
-
-
-for n in range(nt + 1):
-    current_time = n * dt
-    aplicar_cf(u)
-    u_star = np.zeros_like(u)
-    for j in range(1, Ny):
-        rhs = Bx.dot(u[1:Nx, j])
-        u_star[1:Nx, j] = spsolve(Ax, rhs)
-    aplicar_cf(u_star)
-    for i in range(1, Nx):
-        rhs = By.dot(u_star[i, 1:Ny])
-        u_new[i, 1:Ny] = spsolve(Ay, rhs)
-    aplicar_cf(u_new)
-    u[:, :] = u_new[:, :]
-
-    for t_snap in t_snapshots:
-        if abs(current_time - t_snap) < dt/2:
-            snapshots_dict[t_snap] = u.copy()
-            break 
-
-print(f"Number of snapshots saved: {len(snapshots_dict)}")
-
-for t in t_snapshots:
-    if t in snapshots_dict:
-        u_plot = snapshots_dict[t]
-
-        plt.figure(figsize=(6, 5))
-        cp = plt.contourf(X, Y, u_plot, 20, cmap='hot')
-        plt.colorbar(cp)
-        plt.title(f"2D: Temperatura en t = {t:.3f} s")
-        plt.xlabel("x")
-        plt.ylabel("y")
-        plt.tight_layout()
-        plt.show()
-
-        fig = plt.figure(figsize=(8, 6))
-        ax = fig.add_subplot(111, projection='3d')
-        surf = ax.plot_surface(X, Y, u_plot, cmap='hot', edgecolor='k', linewidth=0.3)
-        ax.set_title(f"3D: Temperatura en t = {t:.3f} s")
-        ax.set_xlabel("x")
-        ax.set_ylabel("y")
-        ax.set_zlabel("Temperatura")
-        fig.colorbar(surf, shrink=0.5, aspect=10)
-        plt.tight_layout()
-        plt.show()
-    else:
-        print(f"Warning: Snapshot for time {t:.3f} not found.")
-
-
-#Grafico de la evolucion de la temperatura 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
 from matplotlib.animation import FuncAnimation
+from IPython.display import Image
 
-Lx, Ly = 1.0, 1.0
-Nx, Ny = 50, 50  
-dx, dy = Lx / Nx, Ly / Ny
-x = np.linspace(0, Lx, Nx+1)
-y = np.linspace(0, Ly, Ny+1)
+# Parámetros
+alpha = 1.0 #Constante de difusión térmica
+
+#Configuración del dominio
+Longitud_x, Longitud_y = 1.0, 1.0  # Estos son los largos del dominio en x e y respectivamente 
+num_divisiones_x, num_divisiones_y = 20, 20  # Cantidad de divisiones en las direcciones x e y
+
+#Tamaño de cada celda (Resolución espacial)
+dx, dy = Longitud_x / num_divisiones_x, Longitud_y / num_divisiones_y  # Distancia entre nodos consecutivos en cada eje
+
+#Malla de coordenadas
+x = np.linspace(0, Longitud_x, num_divisiones_x+1)  # Puntos equiespaciados de 0 a Lx (incluyendo extremos)
+y = np.linspace(0, Longitud_y, num_divisiones_y+1)  # Puntos equiespaciados de 0 a Ly (incluyendo extremos)
 X, Y = np.meshgrid(x, y, indexing='ij')
 
-T = 0.1
-dt = 0.001
-nt = int(T / dt)
-alpha = 1.0
+#Configuración temporal
+T = 0.2      # Tiempo total de simulación
+dt = 0.001   # Paso temporal
+nt = int(T / dt)  # Número total de pasos de tiempo
 
-u = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
-u_new = np.zeros_like(u)
+# Cálculo de parámetros auxiliares para Crank-Nicolson en x e y
+parametro_x = alpha * dt / (2 * dx**2)  # Parámetro de difusión en x, dividido entre 2 por Crank-Nicolson
+parametro_y = alpha * dt / (2 * dy**2)  # Igual pero en y
 
-def aplicar_cf(u):
-    u[0, :] = 0
-    u[-1, :] = 0
-    u[:, 0] = 0
-    u[:, -1] = 0
+# Construcción de matrices tridiagonales para el método implícito en x
+Ax = diags([[-parametro_x]*(num_divisiones_x-1), [1+2*parametro_x]*(num_divisiones_x-1), [-parametro_x]*(num_divisiones_x-1)], [-1,0,1], shape=(num_divisiones_x-1, num_divisiones_x-1))  # Matriz del lado izquierdo (implícito) en x
+Bx = diags([[parametro_x]*(num_divisiones_x-1), [1-2*parametro_x]*(num_divisiones_x-1), [parametro_x]*(num_divisiones_x-1)], [-1,0,1], shape=(num_divisiones_x-1, num_divisiones_x-1))    # Matriz del lado derecho (explícito) en x
 
-rx = alpha * dt / (2 * dx**2)
-ry = alpha * dt / (2 * dy**2) # Changed | to *
+# Construcción de matrices tridiagonales para el método implícito en y
+Ay = diags([[-parametro_y]*(num_divisiones_y-1), [1+2*parametro_y]*(num_divisiones_y-1), [-parametro_y]*(num_divisiones_y-1)], [-1,0,1], shape=(num_divisiones_y-1, num_divisiones_y-1))  # Implícito en y
+By = diags([[parametro_y]*(num_divisiones_y-1), [1-2*parametro_y]*(num_divisiones_y-1), [parametro_y]*(num_divisiones_y-1)], [-1,0,1], shape=(num_divisiones_y-1, num_divisiones_y-1))    # Explícito en y
 
-Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
-Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1, Nx-1))
 
-Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
-By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
 
-snapshots = []
-guardar_cada = 10 
+# Condición Inicial
+u = np.zeros((num_divisiones_x+1, num_divisiones_y+1))  # Inicialización de la matriz de temperatura u en todo el dominio
+# Opción 1: Pulso gaussiano centrado en (0.5, 0.5)
+#u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
 
+# Opción 2: Paraboloide centrado (Alternativa físicamente consistente)
+#u[:, :] = 10 * ((X - 0.5)**2 + (Y - 0.5)**2)
+# Opción 3: Onda senosoidal suave (Para patrones periódicos)
+u[:, :] = np.sin(2 * np.pi * X) * np.sin(2 * np.pi * Y)
+
+# Matriz para almacenar la próxima temperatura
+u_proxima = np.zeros_like(u) # Matriz que contendrá la temperatura actualizada
+
+
+# SIMULACIÓN
+
+# Lista para guardar estados intermedios
+historial_temperaturas = []
+intervalo_guardado = 10 # Guarda cada 10 pasos de tiempo
+
+# Comienza el lazo de integración temporal
 for n in range(nt):
-    aplicar_cf(u)
-    u_star = np.zeros_like(u)
+    # Paso intermedio: resolvemos en la dirección x, manteniendo y fijo
+    u_intermedia = np.zeros_like(u)  # Matriz temporal para almacenar resultados intermedios
+    # Recorremos cada fila fija (j) y resolvemos en x (columnas)
+    for j in range(1, num_divisiones_y):
+        rhs = Bx.dot(u[1:num_divisiones_x, j])              # Lado derecho del sistema: combinación explícita
+        u_intermedia[1:num_divisiones_x, j] = spsolve(Ax, rhs)    # Resolvemos el sistema lineal en x
 
-    for j in range(1, Ny):
-        rhs = Bx.dot(u[1:Nx, j])
-        u_star[1:Nx, j] = spsolve(Ax, rhs)
+    # Paso final: resolvemos en la dirección y, manteniendo x fijo
+    for i in range(1, num_divisiones_x):
+        rhs = By.dot(u_intermedia[i, 1:num_divisiones_y])  # Lado derecho para dirección y
+        u_proxima[i, 1:num_divisiones_y] = spsolve(Ay, rhs)   # Solución del sistema lineal en y
 
-    aplicar_cf(u_star)
+    # Aplicar la Condición de Frontera seleccionada a u_proxima 
+    
+    # Opción 1: Dirichlet (bordes fijos en 0)
+    #u_proxima[0, :] = 0; u_proxima[-1, :] = 0; u_proxima[:, 0] = 0; u_proxima[:, -1] = 0
+    # Opción 2: Neumann (flujo de calor nulo en los bordes) 
+    #u_proxima[0, :] = u_proxima[1, :]
+    #u_proxima[-1, :] = u_proxima[-2, :]
+    #u_proxima[:, 0] = u_proxima[:, 1]
+    #u_proxima[:, -1] = u_proxima[:, -2]
+    #Opción 3: Robin (convección en los bordes) 
+    beta = 3.0 # Se puede modificar el valor  (Coeficiente de transferencia de calor en fronteras [W/m²K])
+    u_proxima[0, :] = u_proxima[1, :] / (1 + beta * dx)
+    u_proxima[-1, :] = u_proxima[-2, :] / (1 + beta * dx)
+    u_proxima[:, 0] = u_proxima[:, 1] / (1 + beta * dy)
+    u_proxima[:, -1] = u_proxima[:, -2] / (1 + beta * dy)
 
-    for i in range(1, Nx):
-        rhs = By.dot(u_star[i, 1:Ny])
-        u_new[i, 1:Ny] = spsolve(Ay, rhs)
 
-    aplicar_cf(u_new)
-    u[:, :] = u_new[:, :]
+    # Actualizamos la solución completa para el siguiente paso de tiempo
+    u[:, :] = u_proxima[:, :]  # Se copia el resultado actualizado de u_proxima a u
 
-    if n % guardar_cada == 0:
-        snapshots.append(u.copy())
+    # Guardar estado actual periodicamente
+    if n % intervalo_guardado == 0:
+        historial_temperaturas.append(u.copy())
 
-print(f"Number of snapshots saved: {len(snapshots)}")
+# Visualización
 
-fig, ax = plt.subplots(figsize=(6, 5))
-cp = ax.contourf(X, Y, snapshots[0], 20, cmap='hot')
-cb = plt.colorbar(cp)
-ax.set_title("Evolución de la temperatura")
+print(f"Total de estados guardados: {len(historial_temperaturas)}")
+
+fig, ax = plt.subplots(figsize=(7, 6))
+mapa_calor = ax.contourf(X, Y, historial_temperaturas[0], 20, cmap='hot')
+cbar = fig.colorbar(mapa_calor, ax=ax) 
+ax.set_title(f"Crank-Nicolson ADI 2D (t={0:.3f} s)")
 ax.set_xlabel("x")
 ax.set_ylabel("y")
 
+# Función para actualizar la animación
 def update(frame):
-    print(f"Accessing frame: {frame}") 
-    ax.clear()
-    cp = ax.contourf(X, Y, snapshots[frame], 20, cmap='hot')
-    ax.set_title(f"t = {frame * guardar_cada * dt:.3f} s")
+    ax.clear() # Limpiar el gráfico anterior
+    mapa_calor = ax.contourf(X, Y, historial_temperaturas[frame], 20, cmap='hot') # Crear nuevo mapa de calor
+    ax.set_title(f"t = {frame * intervalo_guardado * dt:.3f} s")
     ax.set_xlabel("x")
     ax.set_ylabel("y")
-    return cp.collections
 
-anim = FuncAnimation(fig, update, frames=len(snapshots), interval=80)
+  # No es necesario retornar objetos cuando blit=False
+    pass 
 
+# Crear animación
+
+anim = FuncAnimation(fig, update, frames=len(historial_temperaturas), interval=400, blit=False) # 400ms entre frames
+plt.close(fig) # Cerrar la figura estática
+
+# Para guardar 
+mp4_filename = "difusion_calor_Onda-Robin.mp4"
+
+print(f"Saving animation to {mp4_filename}...")
+try:
+    anim.save(mp4_filename, writer="ffmpeg", fps=10)
+    print("Animation saved successfully.")
+except Exception as e:
+    print(f"Error saving animation: {e}")
+
+
+# Mapa de calor 2D del resultado final
+
+plt.figure(figsize=(7, 6))
+cp_final = plt.contourf(X, Y, u, 20, cmap='hot')
+plt.colorbar(cp_final)
+plt.xlabel("x")
+plt.ylabel("y")
 plt.tight_layout()
 plt.show()
-
-# ------------------------
-# Para guardar como .mp4 o .gif (opcional)
-# ------------------------
-
-# anim.save("difusion_calor.mp4", writer="ffmpeg", fps=20)
-# anim.save("difusion_calor.gif", writer="pillow", fps=20)
