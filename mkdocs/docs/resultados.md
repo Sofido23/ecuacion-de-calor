@@ -4,12 +4,16 @@
 
 ![Grafico de resultados](imagenes/G1.jpg) 
 
-![Grafico de resultados](imagenes/G2.jpg) 
-
-![Grafico de resultados](imagenes/G3.jpg) 
-
 ![Simulacion](imagenes/AA.gif) 
 
+
+
+![Grafico de resultados](imagenes/G2.jpg) 
+
 ![Simulacion](imagenes/BB.gif) 
+
+
+
+![Grafico de resultados](imagenes/G3.jpg) 
 
 ![Simulacion](imagenes/CC.gif) 
