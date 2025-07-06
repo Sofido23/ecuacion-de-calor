@@ -89,7 +89,8 @@ Comienza el lazo de integración temporal, el for n in range(nt) es el bucle de 
 Actualizamos la solución completa para el siguiente paso de tiempo. Se copia el resultado actualizado de u_new a u. 
         u[:, :] = u_new[:, :]  
 
-Visualización, se crea un mapa de calor con 20 niveles de contorno, usa la escala de colores 'hot' para mostrar la temperatura y muestra el estado final despues de todos los pasos de tiempo. 
+Visualización, se crea un mapa de calor con 20 niveles de contorno, usa la escala de colores 'hot' para mostrar la temperatura y muestra el estado final despues de todos los pasos de tiempo.
+
     plt.figure(figsize=(6,5))
     cp = plt.contourf(X, Y, u, 20, cmap='hot')
     plt.colorbar(cp)
