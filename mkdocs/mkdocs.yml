@@ -16,8 +16,8 @@ extra_javascript:
 
 nav:
   - Introduccion: index.md
-  - Metodologia: crank.md
+  - Metodologia: metodos.md
   - Condiciones Iniciales: condiciones.md
-  - C++: c_mas_mas.md
+  - C++: doxygen.md
   - Python: python.md
 
