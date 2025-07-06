@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
 
-# Definimos las dimensiones físicas del dominio en x e y
+Definimos las dimensiones físicas del dominio en x e y
 Lx, Ly = 1.0, 1.0  # Estos son los largos del dominio en x e y respectivamente (dominio de 1x1 unidad)
 
 # Definimos la cantidad de divisiones del dominio (número de puntos menos uno)
