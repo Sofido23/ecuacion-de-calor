@@ -1,6 +1,4 @@
-## Python
-
-## En el presente apartado explicaremos a detalle cada linea de codigo de la resolucion de la Ecuacion de calor realizada en Python.
+# En el presente apartado explicaremos a detalle cada linea de codigo de la resolucion de la Ecuacion de calor realizada en Python.
 
 ## Grafico de la distribucion de la temperatura en t=0.100:
 
@@ -42,8 +40,10 @@ Constante de difusión térmica (puede representar conductividad térmica, por e
 
     alpha = 1.0
     
-Inicialización de la matriz de temperatura u en todo el dominio. Se crea la condicion inicial. 
+Inicialización de la matriz de temperatura u en todo el dominio, se crea la condicion inicial. 
+
 En donde u es la temperatura inicial en t = 0, u_new es la matriz que contendrá la temperatura actualizada.
+
 X , Y genera la malla 2D (X, Y) para aplicar condiciones iniciales y u[:, :] asigna la condición inicial, es decir, se crea un pulso gaussiano centrado en (0.5, 0.5) que representa el calor localizado. 
 
     u = np.zeros((Nx+1, Ny+1))       
@@ -54,20 +54,24 @@ X , Y genera la malla 2D (X, Y) para aplicar condiciones iniciales y u[:, :] asi
     u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))  # Pico de calor localizado
 
     
-    
-    # Cálculo de parámetros auxiliares para Crank-Nicolson en x e y
-    rx = alpha * dt / (2 * dx**2)  # Parámetro de difusión en x, dividido entre 2 por Crank-Nicolson
-    ry = alpha * dt / (2 * dy**2)  # Igual pero en y
-    
-    # Construcción de matrices tridiagonales sparse (esparcidas) para el método implícito en x
-    Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))  # Matriz del lado izquierdo (implícito) en x
-    Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))    # Matriz del lado derecho (explícito) en x
+Cálculo de parámetros auxiliares para Crank-Nicolson en x en y. Se divide entre 2 porque este metodo usa promedios de tiempo. 
 
-    # Construcción de matrices tridiagonales para el método implícito en y
-    Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))  # Implícito en y
-    By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))    # Explícito en y
+    rx = alpha * dt / (2 * dx**2)  
+    ry = alpha * dt / (2 * dy**2)  
     
-    Comienza el lazo de integración temporal
+Construcción de matrices tridiagonales sparse (esparcidas) para el método implícito en x y en y. En donde Ax y Ay son matrices implicitas (lado izquierdo) y Bx y By son matrices explicitas (lado derecho).
+
+Estas matrices surgen de discretizar la ecuacion de calor con Crank-Nicolson. Tienen forma diagonal porque segundas derivadas generan diferencias de 3 terminos. 
+
+    Ax = diags([[-rx]*(Nx-1), [1+2*rx]*(Nx-1), [-rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))  
+    Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1,0,1], shape=(Nx-1, Nx-1))    
+
+    Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))  
+    By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1,0,1], shape=(Ny-1, Ny-1))    
+
+    
+Comienza el lazo de integración temporal, el for n in range(nt) es el bucle de tiempo principal, es decir, repite la solucion por cada paso de tiempo.
+
     for n in range(nt):
         # Paso intermedio: resolvemos en la dirección x, manteniendo y fijo
         u_star = np.zeros_like(u)  # Matriz temporal para almacenar resultados intermedios
@@ -82,10 +86,10 @@ X , Y genera la malla 2D (X, Y) para aplicar condiciones iniciales y u[:, :] asi
             rhs = By.dot(u_star[i, 1:Ny])         # Lado derecho para dirección y
             u_new[i, 1:Ny] = spsolve(Ay, rhs)     # Solución del sistema lineal en y
     
-        # Actualizamos la solución completa para el siguiente paso de tiempo
-        u[:, :] = u_new[:, :]  # Se copia el resultado actualizado de u_new a u
+Actualizamos la solución completa para el siguiente paso de tiempo. Se copia el resultado actualizado de u_new a u. 
+        u[:, :] = u_new[:, :]  
 
-    # Visualización
+Visualización, se crea un mapa de calor con 20 niveles de contorno, usa la escala de colores 'hot' para mostrar la temperatura y muestra el estado final despues de todos los pasos de tiempo. 
     plt.figure(figsize=(6,5))
     cp = plt.contourf(X, Y, u, 20, cmap='hot')
     plt.colorbar(cp)
