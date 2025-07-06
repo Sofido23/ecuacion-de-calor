@@ -1,6 +1,6 @@
 ## Condiciones Iniciales
 En la ecuacion de calor en 2D, las condiciones inciales definen como esta distribuida la temperatura en todo el dominio espacial en un tiempo inicial. Las condiciones inciales y de frontera son esenciales porque determinan completamente la evolucion temporal de la temperatura. 
-A continuacion, se explicaran a detalle cada una de las condiciones iniciales que se utilizaron para la resolucion de la ecuacion de calor en 2D: 
+Las condiciones iniciales que se utilizaron para la resolucion de la ecuacion de calor en 2D son: 
 
 **1) Campana Gaussiana Centrada:**
 
@@ -28,22 +28,23 @@ Al resolver la ecuacion de calor en 2D, se debe de decirle al programa que es lo
 
 **1) Dirichlet:**
 
-    u_proxima[0, :] = 0; u_proxima[-1, :] = 0; u_proxima[:, 0] = 0; u_proxima[:, -1] = 0
+ Dirichlet simula una placa conectada a un material o liquido que absorbe todo el calor que llega, los bordes del dominio estan en contacto con reservorios termicos que los mantienenm a una temperatura fija. Esta condicion de frontera es muy estable y comun en simulaciones.
 
-   Dirichlet simula una placa conectada a un material o liquido que absorbe todo el calor que llega, los bordes del dominio estan en contacto con reservorios termicos que los mantienenm a una temperatura fija. Esta condicion de frontera es muy estable y comun en simulaciones.
+    u_proxima[0, :] = 0; u_proxima[-1, :] = 0; u_proxima[:, 0] = 0; u_proxima[:, -1] = 0
 
 
 **2) Neumann:**
+
+Neumann simula que los bordes estan aislados termicamente, el calor no puede salir ni entrar por los bordes y no hay flujo de calor a traves de los bordes. Esto implica que no se conoce la temperatura en la frontera, sino el flujo de calor a través de ella. En este caso, lo que se fija es la tasa de variación de la temperatura en dirección perpendicular al borde del dominio. 
  
     #u_proxima[0, :] = u_proxima[1, :]
     #u_proxima[-1, :] = u_proxima[-2, :]
     #u_proxima[:, 0] = u_proxima[:, 1]
     #u_proxima[:, -1] = u_proxima[:, -2]
 
-Neumann simula que los bordes estan aislados termicamente, el calor no puede salir ni entrar por los bordes y no hay flujo de calor a traves de los bordes. 
-
 
 **3) Robin:**
+Robin es una condición mixta de Neumann y Dirichlet que modela un intercambio de calor con el ambiente exterior. El parametro beta es el coeficiente de conveccion, por lo que si beta es grande, se pierde calor mas rapido y si beta es pequeño, se pierde calor lentamente. Se establece una relación entre la temperatura en la frontera y su derivada normal.
 
     beta = 3.0 # Se puede modificar el valor  (Coeficiente de transferencia de calor en fronteras [W/m²K])
     u_proxima[0, :] = u_proxima[1, :] / (1 + beta * dx)
@@ -51,7 +52,6 @@ Neumann simula que los bordes estan aislados termicamente, el calor no puede sal
     u_proxima[:, 0] = u_proxima[:, 1] / (1 + beta * dy)
     u_proxima[:, -1] = u_proxima[:, -2] / (1 + beta * dy)
 
-Robin modela un intercambio de calor con el ambiente exterior. El parametro beta es el coeficiente de conveccion, por lo que si beta es grande, se pierde calor mas rapido y si beta es pequeno, se pierde calor lentamente. Esta condicion de frontera es una mezcla de Neumann y Dirichlet.
 
 
 
