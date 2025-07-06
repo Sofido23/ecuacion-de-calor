@@ -24,7 +24,7 @@ La ecuación de calor en dos dimensiones es una ecuación en derivadas parciales
 
  $\frac{\partial u}{\partial t} = c^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)$
 
-en donde $u(x,y,t)$ representa la temperatura en la posicion $(x,y)$ en el tiempo $t$ y $c$ es una constante que depende del material y $\Delta^2$ es el operador Laplaciano, que en dos dimensiones toma la forma:
+en donde $u(x,y,t)$ representa la temperatura en la posicion $(x,y)$ en el tiempo $t$, $c$ es una constante que depende del material y $\Delta^2$ es el operador Laplaciano, que en dos dimensiones que viene de la expresión:
 
 $\Delta^2u = \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)$
 
