@@ -20,6 +20,10 @@ En el apartado de los codigos, se explicara a detalle los codigos realizados con
 **2)** Oscilaciones no fisicas: Si esto se aplica a problemas de condiciones inciales, puede producir oscilaciones no reales.\
 **3)** Implementacion mas compleja: Este metodo requiere mas trabajo para programarlo, puesto que combina terminos del tiempo actual y del siguiente paso.
 
+## Alternating Direction Implicit (ADI)
+
+
+
  ## Matriz Tridiagonal
  En el proceso de implementación del método de Crank-Nicolson para la resolución de la ecuación de calor, es necesario resolver en cada paso temporal un sistema lineal de ecuaciones cuya matriz asociada es tridiagonal. 
 
