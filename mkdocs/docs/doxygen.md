@@ -4,17 +4,16 @@
 
 La siguiente función crea una matriz representada como un vector de 1D:
 
-```cpp
  El siguiente script de C++ resuelve el problema planteado de la ecuación de calor utilizando seis condiciones iniciales y paralelización de OpenMP para agilizar los procesos.
 
 
- * @details Se utilizaron las siguientes bibliotecas:
+ Se utilizaron las siguientes bibliotecas:
  * - `<iostream>`: Para poder utilizar inputs y outputs con std.
  * - `<cmath>`: Para poder agregar funciones matemáticas
  * - `<vector>`: Para poder usar std::vector
  * - `<omp.h>`: Para paralelizar con OpenMP
  */
-
+```cpp
 #include <iostream>
 #include <cmath>
 #include <vector>
