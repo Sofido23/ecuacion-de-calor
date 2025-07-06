@@ -137,21 +137,19 @@ std::vector<double> crearLaplacianoExplicito(int n, double r) {
 }
 ```
 
-Función que calcula el método de Crank Nicholson con Alternating Direction Implicit (ADI) 
+**Función que calcula el método de Crank Nicholson con Alternating Direction Implicit (ADI)**\
 La función resuelve la ecuación de calor en 2D dividiendo la parte temporal de problema en 2 subpasos:
 Una parte para la dirección y y otra para la dirección x. Esto facilita poder utilizar el método de Crank
-Nicholson al reducirlo con matrices tridiagonales.
-Además en cada subpaso se calcula la multiplicación de de matrices y la resolución de la matriz tridiagonal por 
-medio del método de Thomas.
-Para la parte de la paralelización se utilizó estratégicamente en los bucles for que involucran filas y columnas  de la malla, ya que al agregarlo en dichos for, la velocidad del código mejora considerablemente. Por último, también se calcularon las condiciones de frontera de Dirichlet en los bordes de la malla.
-matriz Matriz almacenada como un vector 1D.
-n Número de puntos a utilizar
-r Valor de la variable discretizada que relaciona la parte espacial y temporal de la ecuación diferencial.
-pasos Número de pasos a utilizar.
-bordeIzq Valor de frontera en el borde izquierdo.
-bordeDer Valor de frontera en el borde derecho.
-bordeInf Valor de frontera del borde inferior.
-bordeSup Valor de frontera del borde superior.
+Nicholson al reducirlo con matrices tridiagonales. Además en cada subpaso se calcula la multiplicación de de matrices y la resolución de la matriz tridiagonal por medio del método de Thomas.\
+Para la parte de la paralelización se utilizó estratégicamente en los bucles for que involucran filas y columnas  de la malla, ya que al agregarlo en dichos `for`, la velocidad del código mejora considerablemente. Por último, también se calcularon las condiciones de frontera de Dirichlet en los bordes de la malla.\
+`matriz` Matriz almacenada como un vector 1D.\
+`n` Número de puntos a utilizar\
+`r` Valor de la variable discretizada que relaciona la parte espacial y temporal de la ecuación diferencial.\
+`pasos` Número de pasos a utilizar.\
+`bordeIzq` Valor de frontera en el borde izquierdo.\
+`bordeDer` Valor de frontera en el borde derecho.\
+`bordeInf` Valor de frontera del borde inferior.\
+`bordeSup` Valor de frontera del borde superior.
 
 ```cpp
 void CN_2D_ADI_Advance(std::vector<double>& matriz, int n, double r, int pasos,
@@ -224,10 +222,10 @@ void CN_2D_ADI_Advance(std::vector<double>& matriz, int n, double r, int pasos,
 
 ```
 
-Función para la condición inicial del paraboloide centrado.
-x Coordenada x normalizada (entre 0 y 1).
-y Coordenada y normalizada (entre 0 y 1).
-return Valor de la distribución de la temperatura en el paraboloide.
+**Función para la condición inicial del paraboloide centrado**\
+`x` Coordenada x normalizada (entre 0 y 1).\
+`y` Coordenada y normalizada (entre 0 y 1).\
+`return` Valor de la distribución de la temperatura en el paraboloide.
 
 ```cpp
 double paraboloide(double x, double y) {
@@ -263,10 +261,10 @@ double barra_horizontal(double x, double y){
 }
 ```
 
-Función para la condición inicial de la campana gaussiana centrada.
-x Coordenada x normalizada (entre 0 y 1).
-y Coordenada y normalizada (entre 0 y 1).
-return Valor de la distribución de la temperatura en la campana gaussiana centrada.
+**Función para la condición inicial de la campana gaussiana centrada**\
+`x` Coordenada x normalizada (entre 0 y 1).\
+`y` Coordenada y normalizada (entre 0 y 1).\
+`return` Valor de la distribución de la temperatura en la campana gaussiana centrada.
  
 ```cpp
 double campana_gaussiana_centr(double x, double y){
@@ -291,10 +289,10 @@ double campana_gaussiana_estr(double x, double y){
 }
 ```
 
-Función para la condición inicial de la onda senosoidal.
-x Coordenada x normalizada (entre 0 y 1).
-y Coordenada y normalizada (entre 0 y 1).
-return Valor de la distribución de la temperatura en la onda senosoidal.
+**Función para la condición inicial de la onda senosoidal**\
+`x` Coordenada x normalizada (entre 0 y 1).\
+`y` Coordenada y normalizada (entre 0 y 1).\
+`return` Valor de la distribución de la temperatura en la onda senosoidal.
 
 ```cpp
 double onda_senosoidal(double x, double y){
@@ -303,9 +301,9 @@ double onda_senosoidal(double x, double y){
 }
 ```
 
-Función main.
-Inicializa todo el código para resolver la ecuación de calor en 2-D. Para esto el usuario primero debe de escoger  una de las seis condiciones iniciales. El programa evalúa dicha condición incial usando el método de Crank Nicholson y la reducción de la matriz tridiagonal con el método de Thomas, y luego imprime el resultado obtenido.
-return 0 si el programa se ejecuta sin ningún problema, y 1 si la opción elegida no era válida.
+**Función main**\
+Inicializa todo el código para resolver la ecuación de calor en 2-D. Para esto el usuario primero debe de escoger una de las seis condiciones iniciales. El programa evalúa dicha condición incial usando el método de Crank Nicholson y la reducción de la matriz tridiagonal con el método de Thomas, y luego imprime el resultado obtenido.\
+`return 0` si el programa se ejecuta sin ningún problema, y 1 si la opción elegida no era válida.
 
 ```cpp
 int main() {
@@ -360,9 +358,3 @@ if (opcion_cond_ini < 1 || opcion_cond_ini > 6){
     return 0;
 }
 ```
-
-
-
-Para esta etapa se creo la documentacion de forma automatica con Doxyge, esto ya que mkdocs no hace documentacion automatica para C++.
-
-Para poder acceder a esta documentacion se puede usar el siguiente link: [Documentación de codigo en C++](html/index.html)
