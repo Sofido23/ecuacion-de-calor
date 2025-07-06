@@ -1,4 +1,9 @@
 # Solución en C++
+El presente código en C++ tiene como objetivo resolver la ecuación de calor en dos dimensiones. Para resolverla de forma eficiente, el código implementa el método Crank–Nicolson con Alternating Direction Implicit (ADI). Este método permite dividir cada paso temporal en dos subpasos alternados en dirección horizontal y vertical, facilitando la resolución de matrices tridiagonales mediante el eficiente método de Thomas.
+
+Además, se integran técnicas de paralelismo de memoria compartida usando OpenMP, lo que permite reducir significativamente los tiempos de cálculo. El código está diseñado para permitir la elección entre distintas condiciones iniciales
+
+---------------------------------------------------------
 
 La siguiente función crea una matriz representada como un vector de 1D:
 
