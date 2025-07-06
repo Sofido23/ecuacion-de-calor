@@ -18,6 +18,7 @@ La siguiente función crea una matriz representada como un vector de 1D:
 #include <cmath>
 #include <vector>
 #include <omp.h>
+```
 
 /**
  * @brief Función que crea una matriz llena de ceros, y la almacena en 1 vector de 1D.
