@@ -96,8 +96,8 @@ void resolverTridiagonal(const std::vector<double>& T, std::vector<double>& u, i
  **Función que crea una matriz tridiagonal implicita**\
  Se crea una matriz tridiagonal implícita con valores 1+2r en la diagonal principal y -r en las otras dos diagonales.\
  `n` Dimensión de la matriz.\
- `r` Valor de la variable discretizada que relaciona la parte espacial y temporal de la ecuación diferencial.
-return Laplaciano Se retorna un Laplaciano tridiagonal implícito nxn.
+ `r` Valor de la variable discretizada que relaciona la parte espacial y temporal de la ecuación diferencial.\
+`return Laplaciano` Se retorna un Laplaciano tridiagonal implícito nxn.
 
 ```cpp
 std::vector<double> crearLaplacianoImplicito(int n, double r) {
