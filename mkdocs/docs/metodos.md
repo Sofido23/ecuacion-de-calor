@@ -31,7 +31,7 @@ En el apartado de los codigos, se explicara a detalle los codigos realizados con
 
  A diferencia de un sistema lineal general, cuya solución mediante métodos clásicos como la eliminación gaussiana requiere un costo computacional de orden $O(N^3)$, los sistemas tridiagonales pueden resolverse en tiempo lineal, es decir, $O(N)$, utilizando el llamado método de Thomas. Este método es una versión especializada del algoritmo de eliminación de Gauss que aprovecha la estructura tridiagonal para reducir el número de operaciones necesarias. El método transforma la matriz original en una matriz triangular superior mediante una etapa de eliminación hacia adelante, y luego obtiene la solución aplicando sustitución hacia atrás.
 
-<img src="imagenes/thomas.png" alt="Método de Thomas" width="50">
+<img src="imagenes/thomas.png" alt="Método de Thomas" width="10">
 
  **Ventajas:**
  
