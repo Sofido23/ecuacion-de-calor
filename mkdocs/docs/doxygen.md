@@ -5,9 +5,24 @@
 La siguiente función crea una matriz representada como un vector de 1D:
 
 ```cpp
-std::vector<double> crearMatrizCeros(int n, int m) {
-    return std::vector<double>(n * m, 0.0);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
