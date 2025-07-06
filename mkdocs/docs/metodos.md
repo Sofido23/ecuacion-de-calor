@@ -8,6 +8,8 @@ Este método consiste en una técnica numérica para resolver ecuaciones diferen
 En síntesis, este método se basa en una promediación entre el método explícito, que evalúa  en el tiempo actual $t_n$ y el método implicito, que evalúa en el siguiente tiempo $t_n+1$. \
 En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad cómo funciona el método de Crank-Nicolson para resolver la ecuacion de calor en 2D. 
 
+Otganizando los termines se convierte en una ecuación matricial de la forma: $A\Vec{\phi}^{n+1}=\Vec{b}^n$
+
 **Ventajas:**
 
 **1)** Estabilidad incondicional: Es estable para cualquier tamano de paso en el tiempo, lo que permite hacer simulaciones con pasos grandes sin que el error explote.\
