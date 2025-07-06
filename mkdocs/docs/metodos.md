@@ -1,3 +1,5 @@
+## Metodología numérica 
+
 Al buscar una metodología numérica para resolver la ecuación de calor, se puede observar que los métodos explícitos, aunque son más fáciles de programar, presentan limitaciones significativas  en cuanto a estabilidad y eficiencia computacional. En una dimensión, puede ser fácil aumentar el número de puntos de la malla de 100 a 1000, pero para una malla bidimensional, estos aumentos son prácticamente inviables.  Por esta razón, se optó por el método de Crank-Nicolson. A diferencia de los métodos explícitos, Crank-Nicolson es incondicionalmente estable, lo que permite utilizar pasos de tiempo mayores sin perder estabilidad numérica. Además, su esquema promedio entre el tiempo actual y el siguiente mejora significativamente la precisión temporal en comparación con otros métodos implícitos más simples. Aunque su implementación es más compleja, el rendimiento obtenido y la calidad de los resultados justifican su elección para el problema a resolver.
 
 ## Método de Crank-Nicolson
