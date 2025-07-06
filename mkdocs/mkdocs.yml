@@ -1,7 +1,7 @@
 site_name: Proyecto final Computacional
 
 theme:
-  name: material
+  name: "material"
   palette:
     primary: indigo
     accent: pink
@@ -18,6 +18,6 @@ nav:
   - Introduccion: index.md
   - Metodologia: metodos.md
   - Resultados: resultados.md
-  - C++: doxygen.md
-  - Python: python.md
+  - Solución C++: doxygen.md
+  - Solución Python: python.md
 
