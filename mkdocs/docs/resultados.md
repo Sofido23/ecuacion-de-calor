@@ -2,4 +2,4 @@
 
 ## Python 
 
-![Grafico de resultados](G1.jpg) 
+  ![Grafico de resultados](G1.jpg) 
