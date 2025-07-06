@@ -177,12 +177,8 @@ from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
 from matplotlib.animation import FuncAnimation
 
-# ------------------------
-# Parámetros del problema
-# ------------------------
-
 Lx, Ly = 1.0, 1.0
-Nx, Ny = 50, 50  # Más puntos = mejor resolución, más lento
+Nx, Ny = 50, 50  
 dx, dy = Lx / Nx, Ly / Ny
 x = np.linspace(0, Lx, Nx+1)
 y = np.linspace(0, Ly, Ny+1)
@@ -193,26 +189,14 @@ dt = 0.001
 nt = int(T / dt)
 alpha = 1.0
 
-# ------------------------
-# Condición inicial: pulso gaussiano
-# ------------------------
-
 u = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
 u_new = np.zeros_like(u)
-
-# ------------------------
-# Condición de frontera: Dirichlet (bordes fijos en 0)
-# ------------------------
 
 def aplicar_cf(u):
     u[0, :] = 0
     u[-1, :] = 0
     u[:, 0] = 0
     u[:, -1] = 0
-
-# ------------------------
-# Construcción de matrices
-# ------------------------
 
 rx = alpha * dt / (2 * dx**2)
 ry = alpha * dt / (2 * dy**2) # Changed | to *
@@ -223,12 +207,8 @@ Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1,
 Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
 By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
 
-# ------------------------
-# Evolución temporal: guardamos muchos pasos
-# ------------------------
-
 snapshots = []
-guardar_cada = 10  # guarda cada 10 pasos de tiempo
+guardar_cada = 10 
 
 for n in range(nt):
     aplicar_cf(u)
@@ -250,10 +230,6 @@ for n in range(nt):
     if n % guardar_cada == 0:
         snapshots.append(u.copy())
 
-# ------------------------
-# Animación
-# ------------------------
-
 print(f"Number of snapshots saved: {len(snapshots)}")
 
 fig, ax = plt.subplots(figsize=(6, 5))
@@ -264,7 +240,7 @@ ax.set_xlabel("x")
 ax.set_ylabel("y")
 
 def update(frame):
-    print(f"Accessing frame: {frame}") # Added print statement
+    print(f"Accessing frame: {frame}") 
     ax.clear()
     cp = ax.contourf(X, Y, snapshots[frame], 20, cmap='hot')
     ax.set_title(f"t = {frame * guardar_cada * dt:.3f} s")
