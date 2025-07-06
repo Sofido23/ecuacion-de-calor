@@ -1,0 +1,23 @@
+site_name: Proyecto final Computacional
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: pink
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Introduccion: index.md
+  - Metodologia: crank.md
+  - Condiciones Iniciales: condiciones.md
+  - C++: c_mas_mas.md
+  - Python: python.md
+
