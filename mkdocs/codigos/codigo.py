@@ -62,11 +62,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
-from mpl_toolkits.mplot3d import Axes3D  # Para 3D
-
-# ------------------------
-# Parámetros del problema
-# ------------------------
+from mpl_toolkits.mplot3d import Axes3D  
 
 Lx, Ly = 1.0, 1.0
 Nx, Ny = 20, 20
@@ -81,13 +77,8 @@ dt = 0.001
 nt = int(T / dt)
 alpha = 1.0
 
-# Opciones que puedes cambiar:
 ci_opcion = 'gaussiana'    # 'gradiente', 'doble_pulso'
 cf_opcion = 'dirichlet'    # 'neumann', 'robin'
-
-# ------------------------
-# Condición inicial
-# ------------------------
 
 u = np.zeros((Nx+1, Ny+1))
 u_new = np.zeros_like(u)
@@ -99,10 +90,6 @@ elif ci_opcion == 'gradiente':
 elif ci_opcion == 'doble_pulso':
     u[:, :] = np.exp(-400 * ((X - 0.25)**2 + (Y - 0.75)**2)) + np.exp(-400 * ((X - 0.75)**2 + (Y - 0.25)**2))
 
-# ------------------------
-# Construcción de matrices
-# ------------------------
-
 rx = alpha * dt / (2 * dx**2)
 ry = alpha * dt / (2 * dy**2)
 
@@ -111,10 +98,6 @@ Bx = diags([[rx]*(Nx-1), [1-2*rx]*(Nx-1), [rx]*(Nx-1)], [-1, 0, 1], shape=(Nx-1,
 
 Ay = diags([[-ry]*(Ny-1), [1+2*ry]*(Ny-1), [-ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
 By = diags([[ry]*(Ny-1), [1-2*ry]*(Ny-1), [ry]*(Ny-1)], [-1, 0, 1], shape=(Ny-1, Ny-1))
-
-# ------------------------
-# Condición de frontera
-# ------------------------
 
 def aplicar_cf(u):
     if cf_opcion == 'dirichlet':
@@ -134,11 +117,7 @@ def aplicar_cf(u):
         u[:, 0] = u[:, 1] / (1 + beta * dy)
         u[:, -1] = u[:, -2] / (1 + beta * dy)
 
-# ------------------------
-# Evolución temporal
-# ------------------------
-
-snapshots_dict = {}  # Para guardar u en momentos seleccionados
+snapshots_dict = {}  
 t_snapshots = [0.01, 0.025, 0.05, 0.1]
 
 
@@ -156,25 +135,17 @@ for n in range(nt + 1):
     aplicar_cf(u_new)
     u[:, :] = u_new[:, :]
 
-    # Save snapshots at specified times
     for t_snap in t_snapshots:
         if abs(current_time - t_snap) < dt/2:
             snapshots_dict[t_snap] = u.copy()
-            break # Assuming unique snapshot times, we can break once a match is found
-
-
-# ------------------------
-# Visualización 2D y 3D
-# ------------------------
+            break 
 
 print(f"Number of snapshots saved: {len(snapshots_dict)}")
 
 for t in t_snapshots:
-    # Ensure there are enough snapshots to plot
     if t in snapshots_dict:
         u_plot = snapshots_dict[t]
 
-        # --------- 2D ---------
         plt.figure(figsize=(6, 5))
         cp = plt.contourf(X, Y, u_plot, 20, cmap='hot')
         plt.colorbar(cp)
@@ -184,7 +155,6 @@ for t in t_snapshots:
         plt.tight_layout()
         plt.show()
 
-        # --------- 3D ---------
         fig = plt.figure(figsize=(8, 6))
         ax = fig.add_subplot(111, projection='3d')
         surf = ax.plot_surface(X, Y, u_plot, cmap='hot', edgecolor='k', linewidth=0.3)
