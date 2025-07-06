@@ -9,3 +9,7 @@
 ![Grafico de resultados](imagenes/G3.jpg) 
 
 ![Simulacion](imagenes/AA.gif) 
+
+![Simulacion](imagenes/BB.gif) 
+
+![Simulacion](imagenes/CC.gif) 
