@@ -1,3 +1,5 @@
+#Este codigo incluye 3 opciones de condiciones de frontera y 3 opciones de condiciones iniciales, por lo que para graficar, solo se debe de dejar una de ambas condiciones.  
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse import diags
@@ -37,15 +39,15 @@ Bx = diags([[parametro_x]*(num_divisiones_x-1), [1-2*parametro_x]*(num_divisione
 Ay = diags([[-parametro_y]*(num_divisiones_y-1), [1+2*parametro_y]*(num_divisiones_y-1), [-parametro_y]*(num_divisiones_y-1)], [-1,0,1], shape=(num_divisiones_y-1, num_divisiones_y-1))  # Implícito en y
 By = diags([[parametro_y]*(num_divisiones_y-1), [1-2*parametro_y]*(num_divisiones_y-1), [parametro_y]*(num_divisiones_y-1)], [-1,0,1], shape=(num_divisiones_y-1, num_divisiones_y-1))    # Explícito en y
 
-
-
 # Condición Inicial
 u = np.zeros((num_divisiones_x+1, num_divisiones_y+1))  # Inicialización de la matriz de temperatura u en todo el dominio
+
 # Opción 1: Pulso gaussiano centrado en (0.5, 0.5)
 #u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
 
 # Opción 2: Paraboloide centrado (Alternativa físicamente consistente)
 #u[:, :] = 10 * ((X - 0.5)**2 + (Y - 0.5)**2)
+
 # Opción 3: Onda senosoidal suave (Para patrones periódicos)
 u[:, :] = np.sin(2 * np.pi * X) * np.sin(2 * np.pi * Y)
 
@@ -77,17 +79,19 @@ for n in range(nt):
     
     # Opción 1: Dirichlet (bordes fijos en 0)
     #u_proxima[0, :] = 0; u_proxima[-1, :] = 0; u_proxima[:, 0] = 0; u_proxima[:, -1] = 0
+    
     # Opción 2: Neumann (flujo de calor nulo en los bordes) 
     #u_proxima[0, :] = u_proxima[1, :]
     #u_proxima[-1, :] = u_proxima[-2, :]
     #u_proxima[:, 0] = u_proxima[:, 1]
     #u_proxima[:, -1] = u_proxima[:, -2]
+    
     #Opción 3: Robin (convección en los bordes) 
-    beta = 3.0 # Se puede modificar el valor  (Coeficiente de transferencia de calor en fronteras [W/m²K])
-    u_proxima[0, :] = u_proxima[1, :] / (1 + beta * dx)
-    u_proxima[-1, :] = u_proxima[-2, :] / (1 + beta * dx)
-    u_proxima[:, 0] = u_proxima[:, 1] / (1 + beta * dy)
-    u_proxima[:, -1] = u_proxima[:, -2] / (1 + beta * dy)
+    #beta = 3.0 # Se puede modificar el valor  (Coeficiente de transferencia de calor en fronteras [W/m²K])
+    #u_proxima[0, :] = u_proxima[1, :] / (1 + beta * dx)
+    #u_proxima[-1, :] = u_proxima[-2, :] / (1 + beta * dx)
+    #u_proxima[:, 0] = u_proxima[:, 1] / (1 + beta * dy)
+    #u_proxima[:, -1] = u_proxima[:, -2] / (1 + beta * dy)
 
 
     # Actualizamos la solución completa para el siguiente paso de tiempo
