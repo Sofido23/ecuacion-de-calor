@@ -20,10 +20,10 @@ Se utilizaron las siguientes bibliotecas:
 #include <omp.h>
 ```
 
-Función que crea una matriz llena de ceros, y la almacena en 1 vector de 1D.
-n Número de filas.
-m Número de columnas.
-return std::vector<double> Se retorna un vector nxm que contiene los arreglos de ceros
+Función que crea una matriz llena de ceros, y la almacena en 1 vector de 1D.\
+`n` Número de filas.\
+`m` Número de columnas.\
+`return std::vector<double>` Se retorna un vector `nxm` que contiene los arreglos de ceros
 
 ```cpp
 std::vector<double> crearMatrizCeros(int n, int m) {
