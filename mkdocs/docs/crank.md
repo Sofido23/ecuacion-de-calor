@@ -5,11 +5,8 @@ Al buscar una metodología numérica para resolver la ecuación de calor, se pue
 Este método consiste en una técnica numérica para resolver ecuaciones diferenciales parciales, especialmente la ecuacion de calor o ecuacion de difusion. Es un metodo implicito y de segundo orden; por lo que combina la precision del metodo del punto medio y la estabilidad del metodo implicito. 
 En sintesis, este metodo se basa en una promediacion entre el metodo explicito, que evalua  en el tiempo actual tn y el metodo implicito, que evalua en el siguiente tiempo tn+1. 
 En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad como funciona el metodo de Crank-Nicolson para resolver la ecuacion de calor en 2D. 
-  
-  
-## Ventajas y desventajas de Crank-Nicolson 
 
-Ventajas:
+**Ventajas:**
 
 1) Estabilidad incondicional: Es estable para cualquier tamano de paso en el tiempo, lo que permite hacer simulaciones con pasos grandes sin que el error explote. 
 
@@ -17,7 +14,7 @@ Ventajas:
 
 3) Simetria temporal: Este metodo es centrado en el tiempo, lo que lo hace ideal para problemas en donde se debe de conservar energia o simetria. 
 
-Desventajas:
+**Desventajas:**
 
 1) Se requiere resolver un sistema lineal en cada paso: Con el metodo de Crank-Nicolson tenemos que resolver matrices en cada paso del tiempo, lo que es mucho mas costoso computacionalmente. 
 
@@ -29,3 +26,7 @@ Desventajas:
  En el proceso de implementación del método de Crank-Nicolson para la resolución de la ecuación de calor, es necesario resolver en cada paso temporal un sistema lineal de ecuaciones cuya matriz asociada es tridiagonal. 
 
  Una matriz tridiagonal es una matriz cuadrada en la que solo los elementos de la diagonal principal y las dos diagonales adyacentes (la superior y la inferior) pueden tener valores distintos de cero. Este patrón de estructura permite representar de manera eficiente operadores como el Laplaciano en una dimensión espacial. En el caso del esquema de Crank-Nicolson, este tipo de matriz se forma tanto en la parte implícita como en la parte explícita del método.
+
+ **Ventajas:**
+
+ **Desventajas:**
