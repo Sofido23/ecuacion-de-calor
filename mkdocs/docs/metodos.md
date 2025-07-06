@@ -31,10 +31,10 @@ En el apartado de los codigos, se explicara a detalle los codigos realizados con
 
  A diferencia de un sistema lineal general, cuya solución mediante métodos clásicos como la eliminación gaussiana requiere un costo computacional de orden $O(N^3)$, los sistemas tridiagonales pueden resolverse en tiempo lineal, es decir, $O(N)$, utilizando el llamado método de Thomas. Este método es una versión especializada del algoritmo de eliminación de Gauss que aprovecha la estructura tridiagonal para reducir el número de operaciones necesarias. El método transforma la matriz original en una matriz triangular superior mediante una etapa de eliminación hacia adelante, y luego obtiene la solución aplicando sustitución hacia atrás.
 
- **Ventajas:**
+ **Ventajas:**\
  **1)** Al trabajar con solo tres vectores (diagonal principal, inferior y superior), se evita almacenar la matriz completa reduciendo el consumo de memoria.\
  **2)** Con condiciones de frontera de tipo Dirichlet (temperatura fija en los extremos), la construcción de la matriz tridiagonal se mantiene sencilla, lo que facilita la implementación del algoritmo.
 
- **Desventajas:**
+ **Desventajas:**\
  **1)** Requiere una implementación cuidadosa para evitar errores en la factorización y la sustitución hacia atrás.\
  **2)** Para condiciones de frontera diferentes a las de tipo Dirichlet, como condiciones de Neumann o mixtas, la construcción de la matriz tridiagonal puede volverse más complicada y requerir modificaciones adicionales en la implementación.
