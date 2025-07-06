@@ -4,7 +4,7 @@ A continuacion, se explicaran a detalle cada una de las condiciones iniciales qu
 
 **1) Pulso gaussiano centrado en (0.5, 0.5):**
 
-  u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
+    u[:, :] = np.exp(-100 * ((X - 0.5)**2 + (Y - 0.5)**2))
 
 **2) Toroide**
 
