@@ -24,10 +24,13 @@ La onda Senoidal simula el patron oscilante de calor; en donde la temperatura de
 
 ## Condiciones de Frontera 
 
+Al resolver la ecuacion de calor en 2D, se debe de decirle al programa que es lo que pasa con los bordes de la placa, y esas son las condiciones de frontera. A continuacion, se explicaran las condiciones de frontera que se utilizaron para resolver dicha ecuacion: 
+
 **1) Dirichlet:**
 
     u_proxima[0, :] = 0; u_proxima[-1, :] = 0; u_proxima[:, 0] = 0; u_proxima[:, -1] = 0
-   
+
+   Dirichlet simula una placa conectada a un material o liquido que absorbe todo el calor que llega, los bordes del dominio estan en contacto con reservorios termicos que los mantienenm a una temperatura fija. Esta condicion de frontera es muy estable y comun en simulaciones.
 
 
 **2) Neumann:**
@@ -37,6 +40,7 @@ La onda Senoidal simula el patron oscilante de calor; en donde la temperatura de
     #u_proxima[:, 0] = u_proxima[:, 1]
     #u_proxima[:, -1] = u_proxima[:, -2]
 
+Neumann simula que los bordes estan aislados termicamente, el calor no puede salir ni entrar por los bordes y no hay flujo de calor a traves de los bordes. 
 
 
 **3) Robin:**
@@ -46,4 +50,8 @@ La onda Senoidal simula el patron oscilante de calor; en donde la temperatura de
     u_proxima[-1, :] = u_proxima[-2, :] / (1 + beta * dx)
     u_proxima[:, 0] = u_proxima[:, 1] / (1 + beta * dy)
     u_proxima[:, -1] = u_proxima[:, -2] / (1 + beta * dy)
+
+Robin modela un intercambio de calor con el ambiente exterior. El parametro beta es el coeficiente de conveccion, por lo que si beta es grande, se pierde calor mas rapido y si beta es pequeno, se pierde calor lentamente. Esta condicion de frontera es una mezcla de Neumann y Dirichlet.
+
+
 
