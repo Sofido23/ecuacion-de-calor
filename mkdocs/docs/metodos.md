@@ -8,7 +8,6 @@ Este método consiste en una técnica numérica para resolver ecuaciones diferen
 En síntesis, este método se basa en una promediación entre el método explícito, que evalúa  en el tiempo actual $t_n$ y el método implicito, que evalúa en el siguiente tiempo $t_n+1$. \
 En el apartado de los codigos, se explicara a detalle los codigos realizados con el fin de comprender a totalidad cómo funciona el método de Crank-Nicolson para resolver la ecuacion de calor en 2D. 
 
-Otganizando los termines se convierte en una ecuación matricial de la forma: $A\vec{\phi^{n+1}}=\vec{b^n}$
 
 **Ventajas:**
 
@@ -31,12 +30,11 @@ En lugar de resolver una ecuación implícita en dos dimensiones al mismo tiempo
 Esto reduce el problema de 2D a varios problemas 1D, que son mucho más fáciles de resolver. Cuando se utiliza ADI, en cada paso intermedio es necsario resolver muchos sistemas 1D implícitos (uno por cada fila o columna) con forma tridiagonal.
 
  ## Matriz Tridiagonal
- En el proceso de implementación del método de Crank-Nicolson para la resolución de la ecuación de calor, es necesario resolver en cada paso temporal un sistema lineal de ecuaciones cuya matriz asociada es tridiagonal. 
+ En el proceso de implementación del método de Crank-Nicolson y API para la resolución de la ecuación de calor; organuzando los terminos, la rucación se convierte en una ecuación matricial de la forma: $A\vec{\phi^{n+1}}=\vec{b^n}$ donde A es una mtriz es tridiagonal de N dimensiones, con N números de subdivisiones de la descretización espacial. 
+ <img src="imagenes/thomas.png" alt="Método de Thomas" width="550">
 
- Una matriz tridiagonal es una matriz cuadrada en la que solo los elementos de la diagonal principal y las dos diagonales adyacentes (la superior y la inferior) pueden tener valores distintos de cero. Este patrón de estructura permite representar de manera eficiente operadores como el Laplaciano en una dimensión espacial. En el caso del esquema de Crank-Nicolson, este tipo de matriz se forma tanto en la parte implícita como en la parte explícita del método.
+ Una matriz tridiagonal es una matriz en la que solo los elementos de la diagonal principal y las dos diagonales adyacentes (la superior y la inferior) pueden tener valores distintos de cero. Este patrón de estructura permite representar de manera eficiente operadores como el Laplaciano en una dimensión espacial. En el caso del esquema de Crank-Nicolson, este tipo de matriz se forma tanto en la parte implícita como en la parte explícita del método.
 
  A diferencia de un sistema lineal general, cuya solución mediante métodos clásicos como la eliminación gaussiana requiere un costo computacional de orden $O(N^3)$, los sistemas tridiagonales pueden resolverse en tiempo lineal, es decir, $O(N)$, utilizando el método de Thomas. Este método es una versión especializada de la eliminación de Gauss que aprovecha la estructura tridiagonal para reducir el número de operaciones necesarias. El método transforma la matriz original en una matriz triangular superior mediante una etapa de eliminación hacia adelante, y luego obtiene la solución aplicando sustitución hacia atrás.
-
-<img src="imagenes/thomas.png" alt="Método de Thomas" width="550">
 
  Al trabajar con solo tres vectores (diagonal principal, inferior y superior), se evita almacenar la matriz completa reduciendo el consumo de memoria.
